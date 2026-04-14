@@ -1,0 +1,55 @@
+﻿@using TechStore.Entities.Models
+@model Category
+
+@{
+    ViewBag.PageTitle = "إدارة الأقسام";
+    ViewBag.CardTitle = "تأكيد عملية الحذف";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-5">
+            <div class="card shadow-sm border-0 mt-4">
+                <div class="card-header bg-soft-danger py-3 text-center">
+                    <h5 class="m-0 font-weight-bold text-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i> هل أنت متأكد؟
+                    </h5>
+                </div>
+
+                <div class="card-body p-4 text-center">
+                    <p class="text-muted mb-4">أنت على وشك حذف هذا القسم نهائياً من قاعدة البيانات. لا يمكن التراجع عن هذا الإجراء.</p>
+
+                    <div class="bg-light rounded p-4 mb-4 text-start">
+                        <div class="mb-3">
+                            <label class="fw-bold small text-secondary d-block">اسم القسم</label>
+                            <span class="h5 text-dark fw-bold">@Model.Name</span>
+                        </div>
+                        <div class="mb-0">
+                            <label class="fw-bold small text-secondary d-block">الوصف</label>
+                            <div class="text-muted">@Html.Raw(Model.Description)</div>
+                        </div>
+                    </div>
+
+                    <form asp-action="DeleteCategory" method="post">
+                        <input hidden asp-for="Id" />
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-center pt-2">
+                            <button type="submit" class="btn btn-danger px-5 fw-bold shadow-sm">
+                                <i class="fas fa-trash-alt me-2"></i> نعم، قم بالحذف
+                            </button>
+                            <a asp-action="Index" class="btn btn-light px-5 text-secondary border fw-bold">
+                                <i class="fas fa-times me-2"></i> إلغاء العودة
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

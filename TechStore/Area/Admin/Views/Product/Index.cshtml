@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.PageTitle = "إدارة المنتجات";
+    ViewBag.CardTitle = "قائمة الأجهزة الإلكترونية";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+            <h5 class="m-0 font-weight-bold text-primary">
+                <i class="fas fa-boxes me-2"></i> المخزون الحالي
+            </h5>
+            <a class="btn btn-primary btn-sm px-4 shadow-sm" href="/Admin/Product/Create">
+                <i class="fas fa-plus-circle"></i> إضافة منتج جديد
+            </a>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="mytable" class="table table-hover align-middle" width="100%">
+                    <thead class="bg-light text-secondary">
+                        <tr>
+                            <th class="border-0">المنتج</th>
+                            <th class="border-0">الوصف</th>
+                            <th class="border-0">السعر</th>
+                            <th class="border-0">القسم</th>
+                            <th class="border-0 text-center">الإجراءات</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/products.js"></script>
+}

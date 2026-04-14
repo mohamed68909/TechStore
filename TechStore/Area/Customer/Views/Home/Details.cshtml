@@ -1,0 +1,206 @@
+﻿@model ShoppingCart
+
+@{
+    ViewData["Title"] = "تفاصيل المنتج";
+}
+
+<style>
+    .product-details-container {
+        padding-top: 3rem;
+        padding-bottom: 5rem;
+    }
+
+    /* صندوق الصورة المحسن */
+    .product-image-card {
+        background-color: #f8fafc;
+        border-radius: 30px;
+        padding: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #e2e8f0;
+        transition: 0.3s;
+        min-height: 400px; /* لضمان عدم قفز المحتوى أثناء التحميل */
+    }
+
+    .product-image-card:hover {
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .product-image-card img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 15px;
+        filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+        
+        /* تأثير الظهور الناعم */
+        opacity: 0;
+        transition: opacity 0.6s ease-in-out;
+    }
+
+    /* يظهر الصورة فور اكتمال تحميلها */
+    .product-image-card img[src] {
+        opacity: 1;
+    }
+
+    /* التصنيفات والأسعار */
+    .category-label {
+        background-color: #eff6ff;
+        color: #2563eb;
+        padding: 6px 15px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 0.8rem;
+        display: inline-block;
+        margin-bottom: 1rem;
+    }
+
+    .price-main {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #0f172a;
+    }
+
+    .price-old {
+        font-size: 1.2rem;
+        color: #94a3b8;
+        text-decoration: line-through;
+        margin-right: 10px;
+    }
+
+    /* تحسين إدخال الكمية */
+    .qty-wrapper {
+        display: flex;
+        align-items: center;
+        background: #f1f5f9;
+        border-radius: 12px;
+        padding: 5px;
+        max-width: 150px;
+    }
+
+    .btn-qty-action {
+        width: 40px;
+        height: 40px;
+        background: white;
+        border: none;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: #0f172a;
+        transition: 0.2s;
+    }
+
+    .btn-qty-action:hover {
+        background: #2563eb;
+        color: white;
+    }
+
+    #inputQuantity {
+        border: none;
+        background: transparent;
+        text-align: center;
+        width: 50px;
+        font-weight: 700;
+    }
+
+    /* زر الإضافة للسلة */
+    .btn-add-to-cart {
+        background: linear-gradient(to right, #0f172a, #1e293b);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 15px 30px;
+        font-weight: 700;
+        flex-grow: 1;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-add-to-cart:hover {
+        background: #2563eb;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+    }
+
+    .trust-badges {
+        margin-top: 2rem;
+        display: flex;
+        gap: 20px;
+        color: #64748b;
+        font-size: 0.85rem;
+    }
+</style>
+
+<div class="container product-details-container">
+    <form method="post" asp-action="Details">
+        <input hidden asp-for="ProductId" />
+
+        <div class="row gx-lg-5 align-items-center">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <div class="product-image-card shadow-sm">
+                    @* إضافة loading="lazy" و onload لضمان انسيابية الظهور *@
+                    <img src="/@Model.Product.Img.TrimStart('/')" 
+                         alt="@Model.Product.Name" 
+                         loading="lazy" 
+                         onload="this.style.opacity='1'" />
+                </div>
+            </div>
+
+            <div class="col-md-6 text-center text-md-start">
+                <span class="category-label">@Model.Product.Category.Name</span>
+                <h1 class="display-5 fw-bold text-dark mb-3">@Model.Product.Name</h1>
+
+                <div class="mb-4">
+                    <span class="price-old">@((Model.Product.Price * 1.2m).ToString("c"))</span>
+                    <span class="price-main">@Model.Product.Price.ToString("c")</span>
+                </div>
+
+                <div class="lead text-muted mb-5 lh-lg" style="font-size: 1rem;">
+                    @Html.Raw(Model.Product.Description)
+                </div>
+
+                <div class="d-flex flex-column flex-sm-row gap-3">
+                    <div class="qty-wrapper shadow-sm mx-auto mx-md-0">
+                        <button type="button" class="btn-qty-action" onclick="changeQty(-1)">
+                            <i class="bi bi-dash-lg"></i>
+                        </button>
+                        <input class="form-control p-0" id="inputQuantity" asp-for="Count" readonly />
+                        <button type="button" class="btn-qty-action" onclick="changeQty(1)">
+                            <i class="bi bi-plus-lg"></i>
+                        </button>
+                    </div>
+
+                    <button class="btn btn-add-to-cart shadow" type="submit">
+                        <i class="bi-cart-fill me-2"></i>
+                        أضف إلى السلة
+                    </button>
+                </div>
+
+                <div class="trust-badges justify-content-center justify-content-md-start">
+                    <span><i class="bi bi-truck me-1"></i> شحن سريع</span>
+                    <span><i class="bi bi-shield-check me-1"></i> ضمان عامين</span>
+                    <span><i class="bi bi-arrow-repeat me-1"></i> استرجاع مجاني</span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        function changeQty(amount) {
+            const input = document.getElementById('inputQuantity');
+            let currentVal = parseInt(input.value);
+            if (!isNaN(currentVal)) {
+                let newVal = currentVal + amount;
+                if (newVal >= 1) {
+                    input.value = newVal;
+                }
+            }
+        }
+    </script>
+}

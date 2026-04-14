@@ -1,0 +1,80 @@
+﻿@using TechStore.Entities.Models
+@model IEnumerable<Category>
+
+@{
+    ViewBag.PageTitle = "إدارة الأقسام";
+}
+
+<div class="container-fluid">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+            <h5 class="m-0 font-weight-bold text-primary">
+                <i class="fas fa-list-alt me-2"></i> قائمة الأقسام
+            </h5>
+            <a class="btn btn-primary btn-sm px-4 shadow-sm" href="/Admin/Category/Create">
+                <i class="fas fa-plus"></i> إضافة قسم جديد
+            </a>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle" id="categoryTable">
+                    <thead class="bg-light">
+                        <tr class="text-secondary">
+                            <th class="border-0">اسم القسم</th>
+                            <th class="border-0">الوصف</th>
+                            <th class="border-0">تاريخ الإنشاء</th>
+                            <th class="border-0 text-center">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="fw-bold text-dark">@item.Name</td>
+                                    <td class="text-muted" style="max-width: 300px;">
+                                        <div class="text-truncate">@Html.Raw(item.Description)</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-light text-secondary border">
+                                            <i class="far fa-calendar-alt me-1"></i> @item.CreatedTime.ToShortDateString()
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group" role="group">
+                                            <a class="btn btn-outline-success btn-sm me-2" href="/Admin/Category/Edit/@item.Id" title="تعديل">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a class="btn btn-outline-danger btn-sm" href="/Admin/Category/Delete/@item.Id" title="حذف">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center py-5 text-muted">
+                                    <i class="fas fa-folder-open fa-3x mb-3 d-block"></i>
+                                    لا توجد أقسام مضافة حالياً.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // يمكن إضافة DataTables هنا لاحقاً لجعل الجدول تفاعلياً
+        });
+    </script>
+}

@@ -1,0 +1,350 @@
+﻿.product-card {
+    border: none;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    background: #fff;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+.product-image-wrapper {
+    background: #f8fafc;
+    padding: 20px;
+    text-align: center;
+}
+
+.product-card img {
+    max-height: 200px;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover img {
+    transform: scale(1.1);
+}
+
+.btn-add-cart {
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* تحسين شكل الجدول */
+.table thead th {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 15px;
+}
+
+.table tbody td {
+    padding: 15px;
+    vertical-align: middle;
+}
+
+/* تأثير عند تمرير الماوس على الصف */
+.table-hover tbody tr:hover {
+    background-color: #f8faff;
+    transition: 0.2s;
+}
+
+/* تجميل الأزرار */
+.btn-sm {
+    border-radius: 8px;
+    padding: 5px 12px;
+}
+
+.card {
+    border-radius: 12px;
+}
+
+/* أوسمة حالات الطلب */
+.badge-status {
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-pending {
+    background-color: #fef3c7;
+    color: #92400e;
+    border: 1px solid #f59e0b;
+}
+
+.status-approved {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #10b981;
+}
+
+.status-shipped {
+    background-color: #dbeafe;
+    color: #1e40af;
+    border: 1px solid #3b82f6;
+}
+
+.status-cancelled {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+}
+
+/* تحسين شكل الجدول */
+#mytable thead th {
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    padding: 15px;
+}
+
+#mytable tbody td {
+    color: #475569;
+    padding: 12px 15px;
+}
+
+
+/* تنسيق صورة المنتج داخل الجدول */
+.product-img-table {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 10px;
+    border: 1px solid #eee;
+}
+
+/* تنسيق السعر */
+.price-tag {
+    font-weight: 700;
+    color: #2563eb;
+    background: #eff6ff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+/* أوسمة الأقسام */
+.category-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background-color: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+}
+
+/* أوسمة حالة المستخدم */
+.badge-status-active {
+    background-color: #d1fae5;
+    color: #065f46;
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+}
+
+.badge-status-locked {
+    background-color: #fee2e2;
+    color: #991b1b;
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+}
+
+/* أيقونة المستخدم (Avatar) */
+.avatar-sm {
+    height: 35px;
+    width: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bg-soft-primary {
+    background-color: rgba(37, 99, 235, 0.1);
+}
+
+.avatar-title {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* تنسيق أزرار الأكشن */
+.btn-action {
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+/* تحسين مظهر حقول الإدخال */
+.form-control:focus, .form-select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.1);
+}
+
+.input-group-text {
+    border-right: none;
+    background-color: #f8fafc;
+}
+
+.form-control {
+    border-left: none;
+}
+
+/* حاوية الصورة */
+.image-preview-container {
+    background-color: #f8fafc;
+    padding: 15px;
+    border-radius: 10px;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* تأثيرات حقول الإدخال */
+.input-group-text {
+    border-right: none;
+    color: #6c757d;
+}
+
+.form-control, .form-select {
+    border-left: none;
+    padding: 0.6rem 1rem;
+}
+
+    .form-control:focus, .form-select:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.05);
+    }
+
+/* حاوية معاينة الصورة */
+.image-preview-wrapper {
+    background-color: #f8fafc;
+    border: 2px dashed #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+    .image-preview-wrapper:hover {
+        border-color: #3b82f6;
+        background-color: #f1f5f9;
+    }
+
+/* تنسيق Badge الحالة بشكل ناعم */
+.bg-soft-info {
+    background-color: rgba(13, 202, 240, 0.1);
+}
+
+/* تنسيق حقول الإدخال لتكون نحيفة وأنيقة (Admin Style) */
+.form-control-sm, .input-group-text {
+    border-radius: 6px;
+}
+
+/* قائمة المنتجات */
+.list-group-item {
+    border-left: none;
+    border-right: none;
+    transition: 0.2s;
+}
+
+    .list-group-item:hover {
+        background-color: #f8fafc;
+    }
+/* تنسيق حقول الإدخال */
+.input-group-text {
+    border-radius: 8px 0 0 8px; /* تقويس الجهة اليمنى (أو اليسرى حسب اللغة) */
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+}
+
+    .form-control:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.05);
+    }
+
+/* زر الحفظ */
+.btn-success {
+    background-color: #10b981;
+    border: none;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+    .btn-success:hover {
+        background-color: #059669;
+        transform: translateY(-1px);
+    }
+/* لون خلفية تحذيري ناعم للهيدر */
+.bg-soft-danger {
+    background-color: rgba(220, 53, 69, 0.05) !important;
+    border-bottom: 1px solid rgba(220, 53, 69, 0.1);
+}
+
+/* تنسيق النصوص داخل الكارت */
+.text-start {
+    text-align: right !important; /* تأكد من المحاذاة لليمين إذا كان الموقع بالعربي */
+}
+
+/* زر الحذف */
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 25px;
+    transition: 0.3s;
+}
+
+    .btn-danger:hover {
+        background-color: #bb2d3b;
+        transform: scale(1.02);
+    }
+/* تحسين شكل حواف المدخلات */
+.form-control, .input-group-text {
+    border-radius: 8px;
+}
+
+.input-group-text {
+    border-color: #dee2e6;
+}
+
+.form-control:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.05);
+}
+
+/* زر الحفظ الأساسي */
+.btn-primary {
+    background-color: #2563eb;
+    border: none;
+    transition: 0.3s;
+}
+
+    .btn-primary:hover {
+        background-color: #1d4ed8;
+        transform: translateY(-1px);
+    }
