@@ -90,4 +90,4 @@ TechStore is a premium, high-performance e-commerce solution built with **ASP.NE
 ## 📄 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-Developed with ❤️ by **Antigravity AI**
+Developed with ❤️ by **Mohamed Ashraf**
