@@ -28,14 +28,14 @@ namespace TechStore.Services.Implementation
             CategoryList = _unitOfWork.Category.GetAll().Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
         };
 
-        public void AddProduct(ProductVM productVM, IFormFile file, string webRootPath)
+        public void AddProduct(ProductVM productVM, IFormFile? file, string webRootPath)
         {
             if (file != null) productVM.Product.Img = ProcessAndSaveImage(file, webRootPath);
             _unitOfWork.Product.Add(productVM.Product);
             _unitOfWork.Complete();
         }
 
-        public void UpdateProduct(ProductVM productVM, IFormFile file, string webRootPath)
+        public void UpdateProduct(ProductVM productVM, IFormFile? file, string webRootPath)
         {
             if (file != null)
             {

@@ -1,0 +1,130 @@
+@model OrderVM
+@using TechStore.Utilities
+
+@{
+    ViewData["Title"] = "تفاصيل الطلب #" + Model.OrderHeader.Id;
+}
+
+<style>
+    .detail-card {
+        border: none;
+        border-radius: 20px;
+        background: white;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .product-img-sm {
+        width: 60px;
+        height: 60px;
+        object-fit: contain;
+        background: #f8fafc;
+        border-radius: 10px;
+        padding: 5px;
+    }
+
+    .info-label {
+        color: #64748b;
+        font-size: 0.85rem;
+        margin-bottom: 2px;
+    }
+
+    .info-value {
+        font-weight: 700;
+        color: #0f172a;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="fw-bold mb-0">تفاصيل الطلب <span class="text-primary">#@Model.OrderHeader.Id</span></h3>
+                <p class="text-muted small">تاريخ الطلب: @Model.OrderHeader.OrderDate.ToString("yyyy/MM/dd HH:mm")</p>
+            </div>
+            <a asp-action="MyOrders" class="btn btn-outline-secondary rounded-pill px-4">
+                <i class="bi bi-arrow-right me-1"></i> العودة لطلباتي
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <div class="card detail-card p-4 h-100">
+                <h5 class="fw-bold mb-4 border-bottom pb-2">معلومات الشحن</h5>
+
+                <div class="mb-3">
+                    <div class="info-label">المستلم</div>
+                    <div class="info-value">@Model.OrderHeader.Name</div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="info-label">رقم الهاتف</div>
+                    <div class="info-value">@Model.OrderHeader.PhoneNumber</div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="info-label">العنوان</div>
+                    <div class="info-value">@Model.OrderHeader.City، @Model.OrderHeader.Address</div>
+                </div>
+
+                <hr />
+
+                <div class="mb-3">
+                    <div class="info-label">حالة الطلب</div>
+                    <span class="badge rounded-pill bg-primary px-3">@Model.OrderHeader.OrderStatus</span>
+                </div>
+
+                @if (Model.OrderHeader.ShippingDate != DateTimeOffset.MinValue)
+                {
+                    <div class="mb-0">
+                        <div class="info-label">تاريخ الشحن المتوقع</div>
+                        <div class="info-value text-success">@Model.OrderHeader.ShippingDate.ToString("d")</div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="card detail-card p-4">
+                <h5 class="fw-bold mb-4 border-bottom pb-2">المنتجات</h5>
+
+                <div class="table-responsive">
+                    <table class="table table-borderless align-middle">
+                        <thead>
+                            <tr class="text-muted small">
+                                <th>المنتج</th>
+                                <th class="text-center">الكمية</th>
+                                <th class="text-end">السعر</th>
+                                <th class="text-end">الإجمالي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.OrderDetails)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="/@item.Product.Img.TrimStart('/')" class="product-img-sm me-3" />
+                                            <div class="fw-bold text-dark">@item.Product.Name</div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center fw-bold">×@item.Count</td>
+                                    <td class="text-end">@item.Price.ToString("c")</td>
+                                    <td class="text-end fw-bold text-primary">@((item.Count * item.Price).ToString("c"))</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr class="border-top">
+                                <td colspan="3" class="pt-4 text-end fw-bold">الإجمالي الكلي:</td>
+                                <td class="pt-4 text-end text-primary" style="font-size: 1.4rem; font-weight: 800;">
+                                    @Model.OrderHeader.TotalPrice.ToString("c")
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

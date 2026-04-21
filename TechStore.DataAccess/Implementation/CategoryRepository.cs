@@ -21,7 +21,7 @@ namespace TechStore.DataAccess.Implementation
             {
                 CategoryInDb.Name = category.Name;
                 CategoryInDb.Description = category.Description;
-                CategoryInDb.CreatedTime = DateTime.Now;
+                CategoryInDb.CreatedTime = DateTimeOffset.UtcNow;
             }
         }
     }

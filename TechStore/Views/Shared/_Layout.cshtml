@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http
 @using TechStore.Utilities
 @inject IHttpContextAccessor httpContextAccessor
 
@@ -115,7 +115,7 @@
                             <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">الرئيسية</a>
                         </li>
 
-                        @if (User.Identity.IsAuthenticated)
+                        @if (User.Identity?.IsAuthenticated == true)
                         {
                             @if (User.IsInRole(SD.AdminRole))
                             {
@@ -131,7 +131,7 @@
                     <div class="d-flex align-items-center gap-3">
                         <partial name="_LoginPartial" />
 
-                        @if (User.Identity.IsAuthenticated)
+                        @if (User.Identity?.IsAuthenticated == true)
                         {
                             <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="btn btn-cart">
                                 <i class="bi-cart-fill me-2"></i>

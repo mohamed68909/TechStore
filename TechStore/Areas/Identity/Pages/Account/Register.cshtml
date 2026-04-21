@@ -1,0 +1,135 @@
+@page
+@using TechStore.Utilities
+@model TechStore.Web.Areas.Identity.Pages.Account.RegisterModel
+
+@{
+    ViewData["Title"] = "إنشاء حساب جديد | Premium";
+    Layout = null; 
+}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TechStore</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+
+<div class="auth-split-container">
+    <!-- Side Panel (Desktop only) -->
+    <div class="auth-image-side" style="background-image: url('/img/auth_bg_v2.png');">
+        <div class="auth-image-content">
+            <h1 class="display-3 fw-bold mb-3">انضم إلى <span class="text-primary text-decoration-underline">المستقبل</span></h1>
+            <p class="lead opacity-75">أنشئ حسابك الآن لتبدأ رحلة تسوق مميزة في أكبر متجر إلكتروني للمنتجات التقنية.</p>
+        </div>
+    </div>
+
+    <!-- Form Panel -->
+    <div class="auth-form-side">
+        <div class="auth-v2-card" style="max-width: 550px;">
+            <div class="mb-4">
+                <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="text-decoration-none d-block mb-3">
+                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 rounded-pill small fw-bold">العودة للرئيسية</span>
+                </a>
+                <h2>إنشاء حساب</h2>
+                <p class="auth-subtitle">ابدأ رحلتك معنا اليوم خطوة بخطوة.</p>
+            </div>
+
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="auth-v2-form">
+                <div asp-validation-summary="ModelOnly" class="text-danger small mb-4 p-3 bg-danger-subtle rounded-3" role="alert"></div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-v2-group">
+                            <label asp-for="Input.Name">الاسم الكامل</label>
+                            <input asp-for="Input.Name" class="form-v2-control" placeholder="اسمك بالكامل" autocomplete="Name" aria-required="true" />
+                            <span asp-validation-for="Input.Name" class="text-danger small mt-1"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-v2-group">
+                            <label asp-for="Input.City">المدينة</label>
+                            <input asp-for="Input.City" class="form-v2-control" placeholder="القاهرة" autocomplete="City" aria-required="true" />
+                            <span asp-validation-for="Input.City" class="text-danger small mt-1"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-v2-group">
+                            <label asp-for="Input.Address">العنوان</label>
+                            <input asp-for="Input.Address" class="form-v2-control" placeholder="الشارع، الحي" autocomplete="Address" aria-required="true" />
+                            <span asp-validation-for="Input.Address" class="text-danger small mt-1"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-v2-group">
+                    <label asp-for="Input.Email">البريد الإلكتروني</label>
+                    <input asp-for="Input.Email" class="form-v2-control" placeholder="name@example.com" autocomplete="username" aria-required="true" />
+                    <span asp-validation-for="Input.Email" class="text-danger small mt-1"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-v2-group">
+                            <label asp-for="Input.Password">كلمة المرور</label>
+                            <input asp-for="Input.Password" class="form-v2-control" placeholder="••••••••" autocomplete="new-password" aria-required="true" />
+                            <span asp-validation-for="Input.Password" class="text-danger small mt-1"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-v2-group">
+                            <label asp-for="Input.ConfirmPassword">تأكيد كلمة المرور</label>
+                            <input asp-for="Input.ConfirmPassword" class="form-v2-control" placeholder="••••••••" autocomplete="new-password" aria-required="true" />
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger small mt-1"></span>
+                        </div>
+                    </div>
+                </div>
+
+                @if (User.IsInRole(SD.AdminRole))
+                {
+                    <div class="mb-4 p-4 border rounded-4 bg-light shadow-sm">
+                        <p class="small fw-bold text-dark mb-3">صلاحيات المستخدم (أدمن فقط):</p>
+                        <div class="d-flex gap-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="@SD.AdminRole" name="RoleRadio" id="roleAdmin" />
+                                <label class="form-check-label small fw-semibold" for="roleAdmin">مسؤول</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="@SD.EditorRole" name="RoleRadio" id="roleEditor" />
+                                <label class="form-check-label small fw-semibold" for="roleEditor">محرر</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="@SD.CustomerRole" name="RoleRadio" id="roleCustomer" checked />
+                                <label class="form-check-label small fw-semibold" for="roleCustomer">عميل</label>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <button id="registerSubmit" type="submit" class="auth-submit-btn">
+                    <span>@(User.IsInRole(SD.AdminRole) ? "إصدار صلاحية جديدة" : "اشتراك مجاني")</span>
+                    <i class="bi bi-person-plus-fill ms-2"></i>
+                </button>
+
+                <div class="auth-v2-footer">
+                    <p>لديك حساب بالفعل؟ <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">تفضل بالدخول</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<partial name="_ValidationScriptsPartial" />
+
+</body>
+</html>

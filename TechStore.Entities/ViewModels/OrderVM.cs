@@ -6,8 +6,8 @@ namespace TechStore.Entities.ViewModels
 {
     public class OrderVM
     {
-        public OrderHeader OrderHeader { get; set; }
+        public OrderHeader OrderHeader { get; set; } = default!;
 
-        public IEnumerable<OrderDetail> OrderDetails { get; set; }
+        public IEnumerable<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
     }
 }

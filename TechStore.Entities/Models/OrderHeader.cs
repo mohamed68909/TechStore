@@ -6,13 +6,13 @@ namespace TechStore.Entities.Models
     {
         public int Id { get; set; }
 
-        public string ApplicationUserId { get; set; }
+        public string ApplicationUserId { get; set; } = string.Empty;
 
         [ValidateNever]
-        public ApplicationUser ApplicationUser { get; set; }
+        public ApplicationUser ApplicationUser { get; set; } = default!;
 
-        public DateTime OrderDate { get; set; }
-        public DateTime ShippingDate { get; set; }
+        public DateTimeOffset OrderDate { get; set; }
+        public DateTimeOffset ShippingDate { get; set; }
 
         public decimal TotalPrice { get; set; }
 
@@ -22,7 +22,7 @@ namespace TechStore.Entities.Models
         public string? TrakcingNumber { get; set; }
         public string? Carrier { get; set; }
 
-        public DateTime PaymentDate { get; set; }
+        public DateTimeOffset PaymentDate { get; set; }
 
         //Stripe Properties
 
@@ -30,9 +30,9 @@ namespace TechStore.Entities.Models
         public string? PaymentIntentId { get; set; }
 
         //User Data
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public string City { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
+        public string City { get; set; } = string.Empty;
         public string? PhoneNumber { get; set; }
 
     }

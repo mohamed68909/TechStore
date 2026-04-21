@@ -48,7 +48,7 @@ namespace TechStore.Services.Implementation
             _unitOfWork.Complete();
         }
 
-        public void UpdateStatus(int orderId, string orderStatus, string paymentStatus = null)
+        public void UpdateStatus(int orderId, string orderStatus, string? paymentStatus = null)
         {
             _unitOfWork.OrderHeader.UpdateStatus(orderId, orderStatus, paymentStatus);
             _unitOfWork.Complete();
@@ -60,7 +60,7 @@ namespace TechStore.Services.Implementation
             orderInDb.TrakcingNumber = orderHeader.TrakcingNumber;
             orderInDb.Carrier = orderHeader.Carrier;
             orderInDb.OrderStatus = SD.Shipped;
-            orderInDb.ShippingDate = DateTime.Now;
+            orderInDb.ShippingDate = DateTimeOffset.UtcNow;
 
             _unitOfWork.OrderHeader.Update(orderInDb);
             _unitOfWork.Complete();

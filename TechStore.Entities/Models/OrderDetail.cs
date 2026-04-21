@@ -8,11 +8,11 @@ namespace TechStore.Entities.Models
 
         public int OrderHeaderId { get; set; }
         [ValidateNever]
-        public OrderHeader OrderHeader { get; set; }
+        public OrderHeader OrderHeader { get; set; } = default!;
 
         public int ProductId { get; set; }
         [ValidateNever]
-        public Product Product { get; set; }
+        public Product Product { get; set; } = default!;
 
         public decimal Price { get; set; }
 

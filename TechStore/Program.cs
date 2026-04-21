@@ -16,18 +16,33 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+
+builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")
     ));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.Configure<StripeData>(builder.Configuration.GetSection("stripe"));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
-    options => options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(4)
-    ).AddDefaultTokenProviders().AddDefaultUI()
+    options => {
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(4);
+        options.SignIn.RequireConfirmedAccount = true; // Required for OTP/Email verification
+    })
+    .AddDefaultTokenProviders().AddDefaultUI()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddAuthentication()
+    .AddGoogle(options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"] ?? "YOUR_GOOGLE_CLIENT_ID";
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"] ?? "YOUR_GOOGLE_CLIENT_SECRET";
+    })
+    .AddFacebook(options =>
+    {
+        options.AppId = builder.Configuration["Authentication:Facebook:AppId"] ?? "YOUR_FACEBOOK_APP_ID";
+        options.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"] ?? "YOUR_FACEBOOK_APP_SECRET";
+    });
 
 
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
@@ -41,9 +56,12 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IOrderService, TechStore.Services.Implementation.OrderService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IHomeService, HomeService>();
+builder.Services.AddScoped<IOTPService, OTPService>();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
+
+// Custom mappings removed as we are now using the standard 'Areas' folder.
 
 var app = builder.Build();
 

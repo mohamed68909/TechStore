@@ -54,7 +54,7 @@ namespace TechStore.DataAccess.Implementation
                     query = query.Include(item);
                 }
             }
-            return query.SingleOrDefault();
+            return query.SingleOrDefault()!;
         }
 
         public void Remove(T entity)

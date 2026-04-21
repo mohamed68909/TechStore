@@ -9,7 +9,7 @@ namespace TechStore.Services.Interfaces
         IEnumerable<OrderHeader> GetAllOrders();
         OrderVM GetOrderDetails(int orderId);
         void UpdateOrderDetails(OrderHeader orderHeader);
-        void UpdateStatus(int orderId, string orderStatus, string paymentStatus = null);
+        void UpdateStatus(int orderId, string orderStatus, string? paymentStatus = null);
         void ShipOrder(OrderHeader orderHeader);
         void CancelOrder(int orderId);
 

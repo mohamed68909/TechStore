@@ -26,13 +26,13 @@ namespace TechStore.Services.Implementation
             if (user == null) return false;
 
           
-            if (user.LockoutEnd == null || user.LockoutEnd < DateTime.Now)
+            if (user.LockoutEnd == null || user.LockoutEnd < DateTimeOffset.UtcNow)
             {
-                user.LockoutEnd = DateTime.Now.AddYears(1);
+                user.LockoutEnd = DateTimeOffset.UtcNow.AddYears(1);
             }
             else 
             {
-                user.LockoutEnd = DateTime.Now;
+                user.LockoutEnd = DateTimeOffset.UtcNow;
             }
 
             _unitOfWork.Complete();

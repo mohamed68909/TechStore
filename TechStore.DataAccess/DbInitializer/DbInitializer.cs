@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TechStore.DataAccess.Data;
 using TechStore.Entities.Models;
@@ -9,10 +9,8 @@ namespace TechStore.DataAccess.DbInitializer
     public class DbInitializer : IDbInitializer
     {
         private readonly ApplicationDbContext _context;
-
-
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IUserStore<ApplicationUser> _userStore;
+
 
 
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -36,16 +34,13 @@ namespace TechStore.DataAccess.DbInitializer
         {
             try
             {
-                if (_context.Database.GetPendingMigrations().Count() > 0)
-                {
-                    _context.Database.Migrate();
-                }
-
+                _context.Database.EnsureCreated();
             }
             catch (Exception ex)
             {
                 // Log the exception or handle it as needed
                 Console.WriteLine($"An error occurred during database initialization: {ex.Message}");
+                return;
             }
 
 
@@ -63,8 +58,11 @@ namespace TechStore.DataAccess.DbInitializer
                 City = "Cairo",
                 Address = "Cairo"
             }, "Admin123*").GetAwaiter().GetResult();
-            ApplicationUser user = _context.ApplicationUsers.FirstOrDefault(u => u.Email == "Admin@gmail.com");
-            _userManager.AddToRoleAsync(user, SD.AdminRole).GetAwaiter().GetResult();
+            ApplicationUser? user = _context.ApplicationUsers.FirstOrDefault(u => u.Email == "Admin@gmail.com");
+            if (user != null)
+            {
+                _userManager.AddToRoleAsync(user, SD.AdminRole).GetAwaiter().GetResult();
+            }
 
         }
     }

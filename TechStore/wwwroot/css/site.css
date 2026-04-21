@@ -1,4 +1,4 @@
-﻿.product-card {
+.product-card {
     border: none;
     border-radius: 15px;
     transition: all 0.3s ease;
@@ -36,7 +36,7 @@
     letter-spacing: 1px;
 }
 
-/* تحسين شكل الجدول */
+/* ????? ??? ?????? */
 .table thead th {
     font-size: 0.85rem;
     text-transform: uppercase;
@@ -49,13 +49,13 @@
     vertical-align: middle;
 }
 
-/* تأثير عند تمرير الماوس على الصف */
+/* ????? ??? ????? ?????? ??? ???? */
 .table-hover tbody tr:hover {
     background-color: #f8faff;
     transition: 0.2s;
 }
 
-/* تجميل الأزرار */
+/* ????? ??????? */
 .btn-sm {
     border-radius: 8px;
     padding: 5px 12px;
@@ -65,7 +65,7 @@
     border-radius: 12px;
 }
 
-/* أوسمة حالات الطلب */
+/* ????? ????? ????? */
 .badge-status {
     padding: 6px 12px;
     border-radius: 30px;
@@ -98,7 +98,7 @@
     border: 1px solid #ef4444;
 }
 
-/* تحسين شكل الجدول */
+/* ????? ??? ?????? */
 #mytable thead th {
     font-size: 0.9rem;
     letter-spacing: 0.5px;
@@ -111,7 +111,7 @@
 }
 
 
-/* تنسيق صورة المنتج داخل الجدول */
+/* ????? ???? ?????? ???? ?????? */
 .product-img-table {
     width: 50px;
     height: 50px;
@@ -121,7 +121,7 @@
     border: 1px solid #eee;
 }
 
-/* تنسيق السعر */
+/* ????? ????? */
 .price-tag {
     font-weight: 700;
     color: #2563eb;
@@ -131,7 +131,7 @@
     font-size: 0.9rem;
 }
 
-/* أوسمة الأقسام */
+/* ????? ??????? */
 .category-badge {
     padding: 5px 12px;
     border-radius: 20px;
@@ -142,7 +142,7 @@
     border: 1px solid #e2e8f0;
 }
 
-/* أوسمة حالة المستخدم */
+/* ????? ???? ???????? */
 .badge-status-active {
     background-color: #d1fae5;
     color: #065f46;
@@ -159,7 +159,7 @@
     font-size: 0.8rem;
 }
 
-/* أيقونة المستخدم (Avatar) */
+/* ?????? ???????? (Avatar) */
 .avatar-sm {
     height: 35px;
     width: 35px;
@@ -181,7 +181,7 @@
     font-weight: bold;
 }
 
-/* تنسيق أزرار الأكشن */
+/* ????? ????? ?????? */
 .btn-action {
     width: 35px;
     height: 35px;
@@ -192,7 +192,7 @@
     transition: 0.3s;
 }
 
-/* تحسين مظهر حقول الإدخال */
+/* ????? ???? ???? ??????? */
 .form-control:focus, .form-select:focus {
     border-color: #3b82f6;
     box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.1);
@@ -207,7 +207,7 @@
     border-left: none;
 }
 
-/* حاوية الصورة */
+/* ????? ?????? */
 .image-preview-container {
     background-color: #f8fafc;
     padding: 15px;
@@ -218,7 +218,7 @@
     justify-content: center;
 }
 
-/* تأثيرات حقول الإدخال */
+/* ??????? ???? ??????? */
 .input-group-text {
     border-right: none;
     color: #6c757d;
@@ -234,7 +234,7 @@
         box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.05);
     }
 
-/* حاوية معاينة الصورة */
+/* ????? ?????? ?????? */
 .image-preview-wrapper {
     background-color: #f8fafc;
     border: 2px dashed #e2e8f0;
@@ -252,17 +252,17 @@
         background-color: #f1f5f9;
     }
 
-/* تنسيق Badge الحالة بشكل ناعم */
+/* ????? Badge ?????? ???? ???? */
 .bg-soft-info {
     background-color: rgba(13, 202, 240, 0.1);
 }
 
-/* تنسيق حقول الإدخال لتكون نحيفة وأنيقة (Admin Style) */
+/* ????? ???? ??????? ????? ????? ?????? (Admin Style) */
 .form-control-sm, .input-group-text {
     border-radius: 6px;
 }
 
-/* قائمة المنتجات */
+/* ????? ???????? */
 .list-group-item {
     border-left: none;
     border-right: none;
@@ -272,9 +272,9 @@
     .list-group-item:hover {
         background-color: #f8fafc;
     }
-/* تنسيق حقول الإدخال */
+/* ????? ???? ??????? */
 .input-group-text {
-    border-radius: 8px 0 0 8px; /* تقويس الجهة اليمنى (أو اليسرى حسب اللغة) */
+    border-radius: 8px 0 0 8px; /* ????? ????? ?????? (?? ?????? ??? ?????) */
 }
 
 .form-control {
@@ -287,7 +287,7 @@
         box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.05);
     }
 
-/* زر الحفظ */
+/* ?? ????? */
 .btn-success {
     background-color: #10b981;
     border: none;
@@ -299,18 +299,18 @@
         background-color: #059669;
         transform: translateY(-1px);
     }
-/* لون خلفية تحذيري ناعم للهيدر */
+/* ??? ????? ?????? ???? ?????? */
 .bg-soft-danger {
     background-color: rgba(220, 53, 69, 0.05) !important;
     border-bottom: 1px solid rgba(220, 53, 69, 0.1);
 }
 
-/* تنسيق النصوص داخل الكارت */
+/* ????? ?????? ???? ?????? */
 .text-start {
-    text-align: right !important; /* تأكد من المحاذاة لليمين إذا كان الموقع بالعربي */
+    text-align: right !important; /* ???? ?? ???????? ?????? ??? ??? ?????? ??????? */
 }
 
-/* زر الحذف */
+/* ?? ????? */
 .btn-danger {
     background-color: #dc3545;
     border: none;
@@ -323,7 +323,7 @@
         background-color: #bb2d3b;
         transform: scale(1.02);
     }
-/* تحسين شكل حواف المدخلات */
+/* ????? ??? ???? ???????? */
 .form-control, .input-group-text {
     border-radius: 8px;
 }
@@ -337,7 +337,7 @@
     box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.05);
 }
 
-/* زر الحفظ الأساسي */
+/* ?? ????? ??????? */
 .btn-primary {
     background-color: #2563eb;
     border: none;
@@ -348,3 +348,181 @@
         background-color: #1d4ed8;
         transform: translateY(-1px);
     }
+
+
+/* ==========================================================================
+   AUTHENTICATION PAGES v2 (Split-Screen Premium)
+   ========================================================================== */
+
+.auth-split-container {
+    display: flex;
+    min-height: 100vh;
+    background: #fff;
+    font-family: 'Cairo', sans-serif;
+}
+
+.auth-image-side {
+    flex: 1.2;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: none; /* Hidden on mobile */
+}
+
+@media (min-width: 992px) {
+    .auth-image-side {
+        display: block;
+    }
+}
+
+.auth-image-side::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(37, 99, 235, 0.3) 100%);
+}
+
+.auth-image-content {
+    position: absolute;
+    bottom: 10%;
+    left: 10%;
+    color: white;
+    max-width: 80%;
+    z-index: 2;
+    animation: fadeUp 1s ease-out;
+}
+
+.auth-form-side {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: #fdfdfd;
+}
+
+.auth-v2-card {
+    width: 100%;
+    max-width: 480px;
+    animation: fadeUp 0.8s ease-out backwards;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.auth-v2-card h2 {
+    font-weight: 800;
+    font-size: 2.5rem;
+    color: #0f172a;
+    margin-bottom: 1rem;
+}
+
+.auth-v2-card .auth-subtitle {
+    font-size: 1.1rem;
+    color: #64748b;
+    margin-bottom: 2.5rem;
+}
+
+.form-v2-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-v2-group label {
+    display: block;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.form-v2-control {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    border-radius: 14px;
+    border: 1.5px solid #e2e8f0;
+    background-color: #f8fafc;
+    transition: all 0.25s ease;
+    font-size: 1rem;
+}
+
+.form-v2-control:focus {
+    outline: none;
+    background-color: #fff;
+    border-color: #2563eb;
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.1), 0 4px 6px -2px rgba(37, 99, 235, 0.05);
+    transform: translateY(-2px);
+}
+
+.auth-submit-btn {
+    width: 100%;
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+}
+
+.auth-submit-btn:hover {
+    background: #1d4ed8;
+    box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.3);
+    transform: scale(1.02);
+}
+
+.auth-v2-footer {
+    margin-top: 2rem;
+    text-align: center;
+    color: #64748b;
+}
+
+.auth-v2-footer a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.auth-v2-footer a:hover {
+    text-decoration: underline;
+}
+
+.social-placeholder {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e2e8f0;
+    text-align: center;
+}
+
+.social-btn-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.social-icon-btn {
+    width: 50px;
+    height: 50px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #475569;
+    font-size: 1.25rem;
+    transition: all 0.2s;
+}
+
+.social-icon-btn:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #0f172a;
+    transform: translateY(-3px);
+}
+

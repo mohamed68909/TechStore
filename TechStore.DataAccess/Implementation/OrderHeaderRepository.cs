@@ -24,7 +24,7 @@ namespace TechStore.DataAccess.Implementation
             if (OrderFromDb != null)
             {
                 OrderFromDb.OrderStatus = OrderStatus;
-                OrderFromDb.PaymentDate = DateTime.Now;
+                OrderFromDb.PaymentDate = DateTimeOffset.UtcNow;
                 if (PaymentStatus != null)
                 {
                     OrderFromDb.PaymentStatus = PaymentStatus;

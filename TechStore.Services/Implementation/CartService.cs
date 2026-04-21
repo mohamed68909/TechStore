@@ -49,7 +49,7 @@ namespace TechStore.Services.Implementation
             // 1. ????? ??? ?????
             vm.OrderHeader.OrderStatus = SD.Pending;
             vm.OrderHeader.PaymentStatus = SD.Pending;
-            vm.OrderHeader.OrderDate = DateTime.Now;
+            vm.OrderHeader.OrderDate = DateTimeOffset.UtcNow;
             vm.OrderHeader.ApplicationUserId = userId;
             CalculateTotalPrice(vm);
 
