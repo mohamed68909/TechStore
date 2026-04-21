@@ -29,21 +29,31 @@ The project is split into a **Monolithic MVC** core for SEO-friendly server-side
 - **TechStore.Api**: Provides JSON endpoints for potential Mobile or SPA integrations.
 
 ### API Endpoint Summary
-| Controller | Endpoint | Method | Description |
-|------------|----------|--------|-------------|
-| Categories | `/api/categories` | GET | List all active categories |
-| Categories | `/api/categories/{id}` | GET | Get category details |
-| Products | `/api/products` | GET | List all products with category info |
-| Products | `/api/products/{id}` | GET | Get specific product details |
+| Module | Endpoint | Method | Security | Description |
+|--------|----------|--------|----------|-------------|
+| Auth | `/api/auth/register` | POST | Anonymous | Register a new user |
+| Auth | `/api/auth/login` | POST | Anonymous | Authenticate & get JWT |
+| Auth | `/api/auth/verify-otp` | POST | Anonymous | Verify account via code |
+| Categories | `/api/categories` | GET | Anonymous | List all categories |
+| Products | `/api/products` | GET | Anonymous | List all products |
+| Carts | `/api/carts` | GET | **Bearer JWT** | View user's cart |
+| Carts | `/api/carts/add` | POST | **Bearer JWT** | Add product to cart |
+| Carts | `/api/carts/checkout` | POST | **Bearer JWT** | Initiate Stripe payment |
+| Orders | `/api/orders` | GET | **Bearer JWT** | View order history |
 
 ---
 
 ## 🔐 Security & Identity Implementation
 
+### JWT Stateless Authentication
+- The API uses **JSON Web Tokens (JWT)** for secure, stateless communication.
+- Tokens are signed with **HMAC SHA-512** and contain user identifier and role claims.
+- Mobile clients transmit the token in the `Authorization: Bearer <Token>` header.
+
 ### OTP Verification (MFA)
 - Implemented a custom **OTP System** that sends a 6-digit verification code to the user's email upon registration.
 - Prevents account activation until the code is verified, ensuring 100% valid user emails.
-- **OTP Expiry**: Codes are valid for a 10-minute window, synchronized via UTC.
+- **UTC Sync**: OTP expiration windows are calculated using `DateTimeOffset.UtcNow`.
 
 ### Social Authentication
 - Fully integrated with **Google** and **Facebook** OAuth 2.0.
@@ -54,7 +64,9 @@ The project is split into a **Monolithic MVC** core for SEO-friendly server-side
 ## 💳 Payment Gateway Integration
 
 - **Stripe Integration**: Uses the official Stripe.net library for secure, PCI-compliant payment processing.
-- **Session Management**: Implements Stripe Checkout Sessions for a hosted, secure payment experience.
+- **Hybrid Support**: 
+    - **MVC**: Direct redirect to Stripe Checkout.
+    - **Web API**: Returns a `PaymentUrl` and `SessionId`, allowing mobile apps to host the payment session in a WebView.
 - **Post-Payment Logic**: Automatic order status transition and payment intent tracking upon successful transaction.
 
 ---
@@ -63,7 +75,7 @@ The project is split into a **Monolithic MVC** core for SEO-friendly server-side
 
 - **Backend**: ASP.NET Core 9.0, Entity Framework Core 9.0
 - **Database**: MS SQL Server (Relational storage with UTC DateTimeOffset)
-- **Security**: ASP.NET Core Identity, JWT (Ready), OTP Verification
+- **Security**: ASP.NET Core Identity, JWT, OTP Verification
 - **Frontend MVC**: Razor Pages, Bootstrap 5, jQuery, SweetAlert2, DataTables.net
 - **UI Libraries**: FontAwesome 6, Google Fonts (Outfit & Cairo), CSS3 Glassmorphism
 
@@ -84,15 +96,15 @@ The project is split into a **Monolithic MVC** core for SEO-friendly server-side
    ```
 
 3. **External Services**:
-   Configure `Stripe` and `Authentication` keys in the secrets manager or `appsettings.json`.
+   Configure `Stripe`, `Jwt`, and `Authentication` keys in the `appsettings.json` of the respective project.
 
 ---
 
 ## 📁 Project Structure
 
 - `TechStore`: Main Web UI & MVC Logic.
-- `TechStore.Api`: RESTful API Layer.
-- `TechStore.Services`: Core Business logic (Order, Cart, Product services).
+- `TechStore.Api`: RESTful API Layer with JWT Authentication.
+- `TechStore.Services`: Core Business logic (Order, Cart, Product, Token services).
 - `TechStore.DataAccess`: Repository implementations and DB Configuration.
 - `TechStore.Entities`: Domain Entities and DTOs.
 - `TechStore.Utilatis`: Static constants, SD, and helper classes.
