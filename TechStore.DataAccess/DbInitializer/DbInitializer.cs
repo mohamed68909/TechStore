@@ -77,6 +77,11 @@ namespace TechStore.DataAccess.DbInitializer
                     existingAdmin.EmailConfirmed = true;
                     _userManager.UpdateAsync(existingAdmin).GetAwaiter().GetResult();
                 }
+                // Ensure role is assigned
+                if (!_userManager.IsInRoleAsync(existingAdmin, SD.AdminRole).GetAwaiter().GetResult())
+                {
+                    _userManager.AddToRoleAsync(existingAdmin, SD.AdminRole).GetAwaiter().GetResult();
+                }
             }
 
         }
