@@ -1,9 +1,9 @@
-﻿@using TechStore.Entities.Models
+@using TechStore.Entities.Models
 @model Category
 
 @{
-    ViewBag.PageTitle = "إدارة الأقسام";
-    ViewBag.CardTitle = "إنشاء تصنيف جديد";
+    ViewBag.PageTitle = "Categories Management";
+    ViewBag.CardTitle = "Create New Category";
 }
 
 <div class="container-fluid">
@@ -12,7 +12,7 @@
             <div class="card shadow-sm border-0 mt-2">
                 <div class="card-header bg-white py-3">
                     <h6 class="m-0 font-weight-bold text-primary">
-                        <i class="fas fa-folder-plus me-2"></i> إدخال بيانات القسم الجديد
+                        <i class="fas fa-folder-plus me-2"></i> Enter New Category Details
                     </h6>
                 </div>
 
@@ -21,28 +21,28 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                         <div class="form-group mb-4">
-                            <label asp-for="Name" class="form-label fw-bold small">اسم التصنيف (مثل: موبايلات، ساعات ذكية)</label>
+                            <label asp-for="Name" class="form-label fw-bold small">Category Name (e.g. Mobiles, Smart Watches)</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light border-end-0">
                                     <i class="fas fa-list text-muted"></i>
                                 </span>
-                                <input asp-for="Name" class="form-control border-start-0 shadow-none" placeholder="أدخل اسم القسم هنا..." />
+                                <input asp-for="Name" class="form-control border-start-0 shadow-none" placeholder="Enter category name here..." />
                             </div>
                             <span asp-validation-for="Name" class="text-danger small"></span>
                         </div>
 
                         <div class="form-group mb-4">
-                            <label asp-for="Description" class="form-label fw-bold small">وصف مختصر للقسم</label>
+                            <label asp-for="Description" class="form-label fw-bold small">Brief Description</label>
                             <textarea id="mytextarea" asp-for="Description" class="form-control"></textarea>
                             <span asp-validation-for="Description" class="text-danger small"></span>
                         </div>
 
                         <div class="d-flex gap-2 pt-3 border-top">
                             <button type="submit" class="btn btn-primary px-4 fw-bold shadow-sm">
-                                <i class="fas fa-check-circle me-2"></i> إنشاء القسم
+                                <i class="fas fa-check-circle me-2"></i> Create Category
                             </button>
                             <a asp-action="Index" class="btn btn-light px-4 text-secondary border fw-bold">
-                                <i class="fas fa-arrow-left me-2"></i> العودة للقائمة
+                                <i class="fas fa-arrow-left me-2"></i> Back to List
                             </a>
                         </div>
                     </form>
@@ -58,15 +58,15 @@
     }
 
     <script>
-        // تخصيص الـ TinyMCE ليكون أخف وأسرع في صفحة الأقسام
+        // TinyMCE configuration
         tinymce.init({
             selector: '#mytextarea',
             height: 250,
             menubar: false,
             plugins: 'lists link textcolor',
             toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist',
-            placeholder: 'اكتب وصفاً جذاباً لهذا القسم ليظهر للعملاء...',
-            content_style: 'body { font-family: Cairo, sans-serif; font-size: 14px; }'
+            placeholder: 'Write an attractive description for this category...',
+            content_style: 'body { font-family: Inter, sans-serif; font-size: 14px; }'
         });
     </script>
 }

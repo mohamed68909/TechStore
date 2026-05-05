@@ -2,7 +2,7 @@
 @using TechStore.Utilities
 
 @{
-    ViewData["Title"] = "تفاصيل الطلب #" + Model.OrderHeader.Id;
+    ViewData["Title"] = "Order Details #" + Model.OrderHeader.Id;
 }
 
 <style>
@@ -38,11 +38,11 @@
     <div class="row mb-4">
         <div class="col-12 d-flex justify-content-between align-items-center">
             <div>
-                <h3 class="fw-bold mb-0">تفاصيل الطلب <span class="text-primary">#@Model.OrderHeader.Id</span></h3>
-                <p class="text-muted small">تاريخ الطلب: @Model.OrderHeader.OrderDate.ToString("yyyy/MM/dd HH:mm")</p>
+                <h3 class="fw-bold mb-0">Order Details <span class="text-primary">#@Model.OrderHeader.Id</span></h3>
+                <p class="text-muted small">Order Date: @Model.OrderHeader.OrderDate.ToString("yyyy/MM/dd HH:mm")</p>
             </div>
             <a asp-action="MyOrders" class="btn btn-outline-secondary rounded-pill px-4">
-                <i class="bi bi-arrow-right me-1"></i> العودة لطلباتي
+                <i class="bi bi-arrow-left me-1"></i> Back to My Orders
             </a>
         </div>
     </div>
@@ -50,34 +50,34 @@
     <div class="row g-4">
         <div class="col-lg-4">
             <div class="card detail-card p-4 h-100">
-                <h5 class="fw-bold mb-4 border-bottom pb-2">معلومات الشحن</h5>
+                <h5 class="fw-bold mb-4 border-bottom pb-2">Shipping Information</h5>
 
                 <div class="mb-3">
-                    <div class="info-label">المستلم</div>
+                    <div class="info-label">Recipient</div>
                     <div class="info-value">@Model.OrderHeader.Name</div>
                 </div>
 
                 <div class="mb-3">
-                    <div class="info-label">رقم الهاتف</div>
+                    <div class="info-label">Phone Number</div>
                     <div class="info-value">@Model.OrderHeader.PhoneNumber</div>
                 </div>
 
                 <div class="mb-3">
-                    <div class="info-label">العنوان</div>
-                    <div class="info-value">@Model.OrderHeader.City، @Model.OrderHeader.Address</div>
+                    <div class="info-label">Address</div>
+                    <div class="info-value">@Model.OrderHeader.City, @Model.OrderHeader.Address</div>
                 </div>
 
                 <hr />
 
                 <div class="mb-3">
-                    <div class="info-label">حالة الطلب</div>
+                    <div class="info-label">Order Status</div>
                     <span class="badge rounded-pill bg-primary px-3">@Model.OrderHeader.OrderStatus</span>
                 </div>
 
                 @if (Model.OrderHeader.ShippingDate != DateTimeOffset.MinValue)
                 {
                     <div class="mb-0">
-                        <div class="info-label">تاريخ الشحن المتوقع</div>
+                        <div class="info-label">Expected Shipping Date</div>
                         <div class="info-value text-success">@Model.OrderHeader.ShippingDate.ToString("d")</div>
                     </div>
                 }
@@ -86,16 +86,16 @@
 
         <div class="col-lg-8">
             <div class="card detail-card p-4">
-                <h5 class="fw-bold mb-4 border-bottom pb-2">المنتجات</h5>
+                <h5 class="fw-bold mb-4 border-bottom pb-2">Products</h5>
 
                 <div class="table-responsive">
                     <table class="table table-borderless align-middle">
                         <thead>
                             <tr class="text-muted small">
-                                <th>المنتج</th>
-                                <th class="text-center">الكمية</th>
-                                <th class="text-end">السعر</th>
-                                <th class="text-end">الإجمالي</th>
+                                <th>Product</th>
+                                <th class="text-center">Quantity</th>
+                                <th class="text-end">Price</th>
+                                <th class="text-end">Total</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -116,7 +116,7 @@
                         </tbody>
                         <tfoot>
                             <tr class="border-top">
-                                <td colspan="3" class="pt-4 text-end fw-bold">الإجمالي الكلي:</td>
+                                <td colspan="3" class="pt-4 text-end fw-bold">Grand Total:</td>
                                 <td class="pt-4 text-end text-primary" style="font-size: 1.4rem; font-weight: 800;">
                                     @Model.OrderHeader.TotalPrice.ToString("c")
                                 </td>

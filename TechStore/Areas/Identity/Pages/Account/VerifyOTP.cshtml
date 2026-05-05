@@ -1,18 +1,18 @@
 @page
 @model TechStore.Web.Areas.Identity.Pages.Account.VerifyOTPModel
 @{
-    ViewData["Title"] = "تفعيل الحساب";
+    ViewData["Title"] = "Activate Account";
     Layout = null;
 }
 
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TechStore</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css" />
     <style>
         :root {
@@ -22,7 +22,7 @@
         }
 
         body {
-            font-family: 'Outfit', 'Cairo', sans-serif;
+            font-family: 'Outfit', 'Inter', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             height: 100vh;
             display: flex;
@@ -123,8 +123,8 @@
         <div class="icon-circle">
             <i class="fas fa-shield-alt"></i>
         </div>
-        <h2 class="fw-bold mb-2">تفعيل الحساب</h2>
-        <p class="text-muted">لقد أرسلنا رمز التفعيل إلى بريدك الإلكتروني <b>@Model.Email</b></p>
+        <h2 class="fw-bold mb-2">Activate Account</h2>
+        <p class="text-muted">We have sent an activation code to your email <b>@Model.Email</b></p>
         
         <form method="post">
             <input type="hidden" asp-for="Email" />
@@ -141,11 +141,11 @@
 
             <div asp-validation-summary="All" class="text-danger small mb-3"></div>
 
-            <button type="submit" class="btn btn-verify shadow">تأكيد الرمز</button>
+            <button type="submit" class="btn btn-verify shadow">Verify Code</button>
         </form>
 
         <div class="resend-text">
-            لم يصلك الرمز؟ <a href="#" class="resend-link">إعادة الإرسال</a>
+            Didn't receive the code? <a href="#" class="resend-link">Resend</a>
         </div>
     </div>
 

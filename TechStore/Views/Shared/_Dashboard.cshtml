@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
    
@@ -29,7 +29,7 @@
             color: #1e293b;
         }
 
-        /* تخصيص شريط التمرير (Scrollbar) ليكون عصرياً */
+        /* Customize Scrollbar to look modern */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -47,7 +47,7 @@
                 background: #94a3b8;
             }
 
-        /* القائمة الجانبية - Sidebar */
+        /* Sidebar */
         .main-sidebar {
             background-color: var(--sidebar-bg) !important;
             transition: all 0.3s ease;
@@ -71,14 +71,14 @@
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
 
-        /* Navbar المحسنة */
+        /* Enhanced Navbar */
         .main-header {
             background-color: rgba(255, 255, 255, 0.8) !important;
-            backdrop-filter: blur(10px); /* تأثير الزجاج الضبابي */
+            backdrop-filter: blur(10px); /* Frosted glass effect */
             border-bottom: 1px solid #e2e8f0 !important;
         }
 
-        /* الكروت - Cards */
+        /* Cards */
         .card {
             border-radius: 16px !important;
             border: 1px solid #e2e8f0 !important;
@@ -91,7 +91,7 @@
             padding: 1.25rem;
         }
 
-        /* تحسين شكل الهوية (Brand) */
+        /* Enhanced Brand Styling */
         .brand-link {
             padding: 1.5rem 0.5rem !important;
             border-bottom: 1px solid rgba(255,255,255,0.1) !important;
@@ -104,19 +104,19 @@
             text-transform: uppercase;
         }
 
-        /* تحسين شكل الأزرار */
+        /* Enhanced Button Styling */
         .btn {
             border-radius: 10px !important;
             padding: 8px 16px;
             font-weight: 600;
         }
 
-        /* الـ Content Wrapper */
+        /* Content Wrapper */
         .content-wrapper {
             background-color: var(--content-bg);
         }
 
-        /* تجميل الجداول */
+        /* Beautify Tables */
         .dataTables_wrapper .dataTables_paginate .paginate_button.current {
             background: var(--primary-tech) !important;
             border: none;
@@ -135,7 +135,7 @@
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="/Customer/Home/Index" class="nav-link text-dark fw-bold border-start ms-2 ps-3">
-                        <i class="fas fa-external-link-alt me-1"></i> المتجر العام
+                        <i class="fas fa-external-link-alt me-1"></i> Public Store
                     </a>
                 </li>
             </ul>
@@ -168,39 +168,47 @@
                         <img src="/img/user2-160x160.jpg" class="img-circle elevation-2 border border-primary" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block fw-bold text-white">مدير النظام</a>
+                        <a href="#" class="d-block fw-bold text-white">System Admin</a>
                     </div>
                 </div>
 
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu">
-                        <li class="nav-header text-muted text-uppercase small" style="letter-spacing: 1px;">الرئيسية</li>
+                        <li class="nav-header text-muted text-uppercase small" style="letter-spacing: 1px;">Main</li>
                         <li class="nav-item">
                             <a href="/Admin/Dashboard/Index" class="nav-link active">
                                 <i class="nav-icon fas fa-chart-line"></i>
-                                <p>الإحصائيات</p>
+                                <p>Dashboard</p>
                             </a>
                         </li>
 
-                        <li class="nav-header text-muted text-uppercase small mt-3" style="letter-spacing: 1px;">إدارة المخزون</li>
+                        <li class="nav-header text-muted text-uppercase small mt-3" style="letter-spacing: 1px;">Inventory Management</li>
                         <li class="nav-item">
                             <a href="/Admin/Category/Index" class="nav-link">
                                 <i class="nav-icon fas fa-tags"></i>
-                                <p>الأقسام</p>
+                                <p>Categories</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="/Admin/Product/Index" class="nav-link">
                                 <i class="nav-icon fas fa-laptop-code"></i>
-                                <p>المنتجات</p>
+                                <p>Products</p>
                             </a>
                         </li>
 
-                        <li class="nav-header text-muted text-uppercase small mt-3" style="letter-spacing: 1px;">المبيعات</li>
+                        <li class="nav-header text-muted text-uppercase small mt-3" style="letter-spacing: 1px;">Sales</li>
                         <li class="nav-item">
                             <a href="/Admin/Order/Index" class="nav-link">
                                 <i class="nav-icon fas fa-shopping-bag"></i>
-                                <p>الطلبات <span class="right badge badge-primary">@ViewBag.Orders</span></p>
+                                <p>Orders <span class="right badge badge-primary">@ViewBag.Orders</span></p>
+                            </a>
+                        </li>
+
+                        <li class="nav-header text-muted text-uppercase small mt-3" style="letter-spacing: 1px;">Users</li>
+                        <li class="nav-item">
+                            <a href="/Admin/Users/Index" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>Users Management <span class="right badge badge-success">@ViewBag.Users</span></p>
                             </a>
                         </li>
                     </ul>
@@ -225,9 +233,9 @@
 
         <footer class="main-footer bg-white border-top text-sm py-3">
             <div class="float-right d-none d-sm-block text-muted">
-                إصدار النظام 1.2.5 <i class="fas fa-code-branch ms-1"></i>
+                System Version 1.2.5 <i class="fas fa-code-branch ms-1"></i>
             </div>
-            <strong>Copyright &copy; @DateTime.Now.Year <span class="text-primary">MyShop Tech</span>.</strong> جميع الحقوق محفوظة.
+            <strong>Copyright &copy; @DateTime.Now.Year <span class="text-primary">MyShop Tech</span>.</strong> All rights reserved.
         </footer>
     </div>
 
@@ -239,7 +247,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script src="https://cdn.tiny.cloud/1/8ta4318dfds9d1ur5voabx9hyu67y85lf1e5wng61irwbxh6/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

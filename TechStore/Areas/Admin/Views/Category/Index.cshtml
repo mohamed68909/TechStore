@@ -2,17 +2,17 @@
 @model IEnumerable<Category>
 
 @{
-    ViewBag.PageTitle = "إدارة الأقسام";
+    ViewBag.PageTitle = "Categories Management";
 }
 
 <div class="container-fluid">
     <div class="card shadow-sm border-0">
         <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
             <h5 class="m-0 font-weight-bold text-primary">
-                <i class="fas fa-list-alt me-2"></i> قائمة الأقسام
+                <i class="fas fa-list-alt me-2"></i> Categories List
             </h5>
             <a class="btn btn-primary btn-sm px-4 shadow-sm" href="/Admin/Category/Create">
-                <i class="fas fa-plus"></i> إضافة قسم جديد
+                <i class="fas fa-plus"></i> Add New Category
             </a>
         </div>
 
@@ -21,10 +21,10 @@
                 <table class="table table-hover align-middle" id="categoryTable">
                     <thead class="bg-light">
                         <tr class="text-secondary">
-                            <th class="border-0">اسم القسم</th>
-                            <th class="border-0">الوصف</th>
-                            <th class="border-0">تاريخ الإنشاء</th>
-                            <th class="border-0 text-center">الإجراءات</th>
+                            <th class="border-0">Category Name</th>
+                            <th class="border-0">Description</th>
+                            <th class="border-0">Created Date</th>
+                            <th class="border-0 text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,10 +44,10 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
-                                            <a class="btn btn-outline-success btn-sm me-2" href="/Admin/Category/Edit/@item.Id" title="تعديل">
+                                            <a class="btn btn-outline-success btn-sm me-2" href="/Admin/Category/Edit/@item.Id" title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a class="btn btn-outline-danger btn-sm" href="/Admin/Category/Delete/@item.Id" title="حذف">
+                                            <a class="btn btn-outline-danger btn-sm" href="/Admin/Category/Delete/@item.Id" title="Delete">
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                         </div>
@@ -60,7 +60,7 @@
                             <tr>
                                 <td colspan="4" class="text-center py-5 text-muted">
                                     <i class="fas fa-folder-open fa-3x mb-3 d-block"></i>
-                                    لا توجد أقسام مضافة حالياً.
+                                    No categories added yet.
                                 </td>
                             </tr>
                         }
@@ -74,7 +74,7 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            // يمكن إضافة DataTables هنا لاحقاً لجعل الجدول تفاعلياً
+            // You can add DataTables here later to make the table interactive
         });
     </script>
 }

@@ -1,10 +1,13 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TechStore.Entities.ViewModels;
+using TechStore.Utilities;
 
 
 namespace TechStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.AdminRole)]
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
@@ -36,7 +39,7 @@ namespace TechStore.Areas.Admin.Controllers
             {
               
                 _productService.AddProduct(productVM, file, _webHostEnvironment.WebRootPath);
-                TempData["Create"] = "?? ????? ?????? ????? ?????? ??????";
+                TempData["Create"] = "Product has been added successfully";
                 return RedirectToAction("Index");
             }
             return View(productVM);
@@ -57,7 +60,7 @@ namespace TechStore.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 _productService.UpdateProduct(productVM, file, _webHostEnvironment.WebRootPath);
-                TempData["Update"] = "?? ??????? ?????";
+                TempData["Update"] = "Product has been updated successfully";
                 return RedirectToAction("Index");
             }
             return View(productVM);
@@ -68,7 +71,7 @@ namespace TechStore.Areas.Admin.Controllers
         {
             
             var success = _productService.DeleteProduct(id, _webHostEnvironment.WebRootPath);
-            return Json(new { success = success, message = success ? "?? ????? ?????" : "??? ???" });
+            return Json(new { success = success, message = success ? "Product has been deleted successfully" : "Error while deleting" });
         }
     }
 }

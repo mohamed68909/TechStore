@@ -4,12 +4,12 @@
 @inject IHttpContextAccessor httpContextAccessor
 
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>myShop | أفضل العروض التقنية</title>
+    <title>myShop | Best Tech Offers</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
@@ -19,9 +19,9 @@
 
     <style>
         :root {
-            --primary-color: #2563eb; /* أزرق تقني عصري */
-            --dark-color: #0f172a; /* كحلي غامق جداً */
-            --light-bg: #f8fafc; /* خلفية فاتحة مريحة */
+            --primary-color: #2563eb; /* Modern tech blue */
+            --dark-color: #0f172a; /* Very dark navy */
+            --light-bg: #f8fafc; /* Light comfortable background */
         }
 
         body {
@@ -30,7 +30,7 @@
             color: var(--dark-color);
         }
 
-        /* شريط التنقل الزجاجي */
+        /* Glass navbar */
         .navbar {
             background-color: rgba(255, 255, 255, 0.85) !important;
             backdrop-filter: blur(12px);
@@ -62,7 +62,7 @@
                 color: var(--primary-color) !important;
             }
 
-        /* زر السلة الاحترافي */
+        /* Professional Cart Button */
         .btn-cart {
             background-color: var(--dark-color);
             color: white !important;
@@ -81,12 +81,12 @@
                 box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);
             }
 
-        /* الهيرو سيكشن - واجهة الترحيب */
+        /* Hero Section - Welcome Interface */
         .hero-banner {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             padding: 120px 0;
             position: relative;
-            clip-path: ellipse(150% 100% at 50% 0%); /* انحناء عصري أسفل الهيدر */
+            clip-path: ellipse(150% 100% at 50% 0%); /* Modern curve below header */
         }
 
         .hero-title {
@@ -98,7 +98,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* الفوتر المطور */
+        /* Enhanced Footer */
         .site-footer {
             background-color: var(--dark-color);
             color: #94a3b8;
@@ -135,22 +135,22 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item"><a class="nav-link active" href="/Customer/Home/Index">الرئيسية</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/Customer/Home/Index">Home</a></li>
 
                     @if (User.Identity?.IsAuthenticated == true)
                     {
                         @if (User.IsInRole(SD.AdminRole))
                         {
-                            <li class="nav-item"><a class="nav-link text-primary fw-bold" href="/Admin/Dashboard/Index"><i class="bi bi-speedometer2 me-1"></i>لوحة التحكم</a></li>
+                            <li class="nav-item"><a class="nav-link text-primary fw-bold" href="/Admin/Dashboard/Index"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a></li>
                         }
                         else
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown">حسابي</a>
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown">My Account</a>
                                 <ul class="dropdown-menu border-0 shadow-lg mt-3" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item py-2" href="/Customer/Order/MyOrders"><i class="bi bi-bag-check me-2"></i>طلباتي</a></li>
+                                    <li><a class="dropdown-item py-2" href="/Customer/Order/MyOrders"><i class="bi bi-bag-check me-2"></i>My Orders</a></li>
                                     <li><hr class="dropdown-divider" /></li>
-                                    <li><a class="dropdown-item py-2" href="/Identity/Account/Manage"><i class="bi bi-person-gear me-2"></i>تعديل البروفايل</a></li>
+                                    <li><a class="dropdown-item py-2" href="/Identity/Account/Manage"><i class="bi bi-person-gear me-2"></i>Edit Profile</a></li>
                                 </ul>
                             </li>
                         }
@@ -164,7 +164,7 @@
                     {
                         <a href="/Customer/Cart/Index" class="btn btn-cart ms-lg-3 mt-2 mt-lg-0">
                             <i class="bi-cart-fill me-2"></i>
-                            السلة
+                            Cart
                             <span class="badge bg-primary text-white ms-2 rounded-pill">
                                 @await Component.InvokeAsync("ShoppingCart")
                             </span>
@@ -176,7 +176,7 @@
     </nav>
 
     @{
-        // كود آمن لتحديد الصفحة الرئيسية دون حدوث خطأ Null
+        // Safe code to determine home page without Null error
         var controller = ViewContext.RouteData.Values["controller"]?.ToString();
         var action = ViewContext.RouteData.Values["action"]?.ToString();
         var isHome = string.Equals(controller, "Home", StringComparison.OrdinalIgnoreCase) &&
@@ -189,11 +189,11 @@
             <div class="container px-4 px-lg-5 my-5">
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
-                        <h1 class="hero-title mb-3">عالم من الابتكار التقني</h1>
-                        <p class="lead fw-normal text-white-50 mb-5">اكتشف أحدث الموبايلات، الساعات، والأجهزة الذكية بأفضل الأسعار وأقوى الضمانات</p>
+                        <h1 class="hero-title mb-3">A World of Tech Innovation</h1>
+                        <p class="lead fw-normal text-white-50 mb-5">Discover the latest mobiles, watches, and smart devices with the best prices and strongest guarantees</p>
                         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                            <a href="#products" class="btn btn-primary btn-lg px-5 rounded-pill fw-bold shadow">تسوق الآن</a>
-                            <a href="#" class="btn btn-outline-light btn-lg px-5 rounded-pill fw-bold">أحدث العروض</a>
+                            <a href="#products" class="btn btn-primary btn-lg px-5 rounded-pill fw-bold shadow">Shop Now</a>
+                            <a href="#" class="btn btn-outline-light btn-lg px-5 rounded-pill fw-bold">Latest Offers</a>
                         </div>
                     </div>
                 </div>
@@ -212,17 +212,17 @@
             <div class="row g-5">
                 <div class="col-lg-4 col-md-6">
                     <h5 class="navbar-brand text-white mb-4">MY<span>SHOP</span></h5>
-                    <p class="small lh-lg">نحن نوفر لك أفضل تجربة تسوق للإلكترونيات في مصر. جودة حقيقية، أسعار تنافسية، ودعم فني متواصل على مدار الساعة.</p>
+                    <p class="small lh-lg">We provide the best electronics shopping experience. Real quality, competitive prices, and 24/7 technical support.</p>
                 </div>
                 <div class="col-lg-2 col-md-6">
-                    <h6 class="footer-heading small text-uppercase">روابط سريعة</h6>
-                    <a href="#" class="footer-link">عن المتجر</a>
-                    <a href="#" class="footer-link">سياسة الخصوصية</a>
-                    <a href="#" class="footer-link">شروط الاستخدام</a>
+                    <h6 class="footer-heading small text-uppercase">Quick Links</h6>
+                    <a href="#" class="footer-link">About Store</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Use</a>
                 </div>
                 <div class="col-lg-3 col-md-6 text-center text-md-start">
-                    <h6 class="footer-heading small text-uppercase">تواصل معنا</h6>
-                    <p class="small mb-1">الإسكندرية، مصر</p>
+                    <h6 class="footer-heading small text-uppercase">Contact Us</h6>
+                    <p class="small mb-1">Alexandria, Egypt</p>
                     <p class="small mb-4 text-white">support@myshop.com</p>
                     <div class="d-flex gap-3 justify-content-center justify-content-md-start">
                         <a href="#" class="btn btn-outline-light btn-sm rounded-circle"><i class="bi bi-facebook"></i></a>
@@ -233,7 +233,7 @@
             </div>
             <hr class="my-5 border-secondary opacity-25" />
             <div class="text-center small">
-                <p class="mb-0 text-muted">جميع الحقوق محفوظة &copy; MyShop Tech @DateTime.Now.Year</p>
+                <p class="mb-0 text-muted">All rights reserved &copy; MyShop Tech @DateTime.Now.Year</p>
             </div>
         </div>
     </footer>

@@ -1,9 +1,9 @@
-﻿@using TechStore.Entities.Models
+@using TechStore.Entities.Models
 @model Category
 
 @{
-    ViewBag.PageTitle = "إدارة الأقسام";
-    ViewBag.CardTitle = "تأكيد عملية الحذف";
+    ViewBag.PageTitle = "Categories Management";
+    ViewBag.CardTitle = "Confirm Deletion";
 }
 
 <div class="container-fluid">
@@ -12,20 +12,20 @@
             <div class="card shadow-sm border-0 mt-4">
                 <div class="card-header bg-soft-danger py-3 text-center">
                     <h5 class="m-0 font-weight-bold text-danger">
-                        <i class="fas fa-exclamation-triangle me-2"></i> هل أنت متأكد؟
+                        <i class="fas fa-exclamation-triangle me-2"></i> Are you sure?
                     </h5>
                 </div>
 
                 <div class="card-body p-4 text-center">
-                    <p class="text-muted mb-4">أنت على وشك حذف هذا القسم نهائياً من قاعدة البيانات. لا يمكن التراجع عن هذا الإجراء.</p>
+                    <p class="text-muted mb-4">You are about to permanently delete this category from the database. This action cannot be undone.</p>
 
                     <div class="bg-light rounded p-4 mb-4 text-start">
                         <div class="mb-3">
-                            <label class="fw-bold small text-secondary d-block">اسم القسم</label>
+                            <label class="fw-bold small text-secondary d-block">Category Name</label>
                             <span class="h5 text-dark fw-bold">@Model.Name</span>
                         </div>
                         <div class="mb-0">
-                            <label class="fw-bold small text-secondary d-block">الوصف</label>
+                            <label class="fw-bold small text-secondary d-block">Description</label>
                             <div class="text-muted">@Html.Raw(Model.Description)</div>
                         </div>
                     </div>
@@ -35,10 +35,10 @@
 
                         <div class="d-grid gap-2 d-md-flex justify-content-center pt-2">
                             <button type="submit" class="btn btn-danger px-5 fw-bold shadow-sm">
-                                <i class="fas fa-trash-alt me-2"></i> نعم، قم بالحذف
+                                <i class="fas fa-trash-alt me-2"></i> Yes, Delete
                             </button>
                             <a asp-action="Index" class="btn btn-light px-5 text-secondary border fw-bold">
-                                <i class="fas fa-times me-2"></i> إلغاء العودة
+                                <i class="fas fa-times me-2"></i> Cancel / Return
                             </a>
                         </div>
                     </form>

@@ -1,14 +1,14 @@
-﻿@using TechStore.Entities.ViewModels
+@using TechStore.Entities.ViewModels
 @model ProductVM
 
 @{
-    ViewBag.PageTitle = "إدارة المنتجات";
-    ViewBag.CardTitle = "تعديل بيانات المنتج التقني";
+    ViewBag.PageTitle = "Products Management";
+    ViewBag.CardTitle = "Add New Tech Product";
     Layout = "~/Views/Shared/_Dashboard.cshtml";
 }
 
 <div class="container-fluid">
-    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
         <input hidden asp-for="Product.Id" />
         <input hidden asp-for="Product.Img" />
 
@@ -19,13 +19,13 @@
                 <div class="card shadow-sm border-0 mb-4">
                     <div class="card-header bg-white py-3">
                         <h6 class="m-0 font-weight-bold text-primary">
-                            <i class="fas fa-edit me-2"></i> تعديل تفاصيل الجهاز
+                            <i class="fas fa-edit me-2"></i> Device Details
                         </h6>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-6 mb-3">
-                                <label asp-for="Product.Name" class="form-label fw-bold">اسم المنتج</label>
+                                <label asp-for="Product.Name" class="form-label fw-bold">Product Name</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light text-muted"><i class="fas fa-mobile-alt"></i></span>
                                     <input asp-for="Product.Name" class="form-control" />
@@ -34,28 +34,28 @@
                             </div>
 
                             <div class="form-group col-md-6 mb-3">
-                                <label asp-for="Product.Price" class="form-label fw-bold">السعر الحالي</label>
+                                <label asp-for="Product.Price" class="form-label fw-bold">Current Price</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light text-muted"><i class="fas fa-money-bill-wave"></i></span>
                                     <input asp-for="Product.Price" class="form-control" />
-                                    <span class="input-group-text bg-light">ج.م</span>
+                                    <span class="input-group-text bg-light">EGP</span>
                                 </div>
                                 <span asp-validation-for="Product.Price" class="text-danger small"></span>
                             </div>
 
                             <div class="form-group col-12 mb-3">
-                                <label asp-for="Product.CategoryId" class="form-label fw-bold">القسم</label>
+                                <label asp-for="Product.CategoryId" class="form-label fw-bold">Category</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light text-muted"><i class="fas fa-layer-group"></i></span>
                                     <select asp-for="Product.CategoryId" class="form-select" asp-items="Model.CategoryList">
-                                        <option disabled selected>-- اختر التصنيف --</option>
+                                        <option disabled selected>-- Select Category --</option>
                                     </select>
                                 </div>
                                 <span asp-validation-for="Product.CategoryId" class="text-danger small"></span>
                             </div>
 
                             <div class="form-group col-12 mb-0">
-                                <label asp-for="Product.Description" class="form-label fw-bold">الوصف التقني المعدل</label>
+                                <label asp-for="Product.Description" class="form-label fw-bold">Technical Description</label>
                                 <textarea id="mytextarea" asp-for="Product.Description" class="form-control"></textarea>
                                 <span asp-validation-for="Product.Description" class="text-danger small"></span>
                             </div>
@@ -67,7 +67,7 @@
             <div class="col-md-4">
                 <div class="card shadow-sm border-0 mb-4">
                     <div class="card-header bg-white py-3">
-                        <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-image me-2"></i> صورة المنتج</h6>
+                        <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-image me-2"></i> Product Image</h6>
                     </div>
                     <div class="card-body text-center">
                         <div class="image-preview-wrapper mb-3 border rounded p-2" style="background: #f8f9fa;">
@@ -82,10 +82,10 @@
                         </div>
                         <div class="form-group">
                             <label for="imgfile" class="btn btn-outline-primary btn-sm w-100">
-                                <i class="fas fa-sync-alt me-2"></i> تغيير الصورة (WebP)
+                                <i class="fas fa-sync-alt me-2"></i> Upload Image (WebP)
                                 <input type="file" name="file" id="imgfile" class="form-control d-none" onchange="fillimg(event);" />
                             </label>
-                            <small class="text-muted d-block mt-2">سيتم ضغط الصورة تلقائياً لتسريع الموقع</small>
+                            <small class="text-muted d-block mt-2">Image will be automatically compressed</small>
                         </div>
                     </div>
                 </div>
@@ -93,10 +93,10 @@
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
                         <button type="submit" class="btn btn-success w-100 mb-2 py-2 fw-bold">
-                            <i class="fas fa-save me-2"></i> حفظ التغييرات
+                            <i class="fas fa-save me-2"></i> Create Product
                         </button>
                         <a asp-action="Index" class="btn btn-light w-100 text-secondary">
-                            <i class="fas fa-arrow-right me-2"></i> العودة للقائمة
+                            <i class="fas fa-arrow-right me-2"></i> Back to List
                         </a>
                     </div>
                 </div>
@@ -113,12 +113,10 @@
         tinymce.init({
             selector: '#mytextarea',
             plugins: 'lists link table code wordcount',
-            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | code',
-            language: 'ar',
-            directionality: 'rtl'
+            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | code'
         });
 
-        // جافا سكريبت لمعاينة الصورة الجديدة فور اختيارها
+        // JavaScript to preview the new image immediately after selection
         function fillimg(event) {
             var reader = new FileReader();
             reader.onload = function () {

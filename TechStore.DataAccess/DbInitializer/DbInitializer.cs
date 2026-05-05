@@ -50,18 +50,33 @@ namespace TechStore.DataAccess.DbInitializer
                 _roleManager.CreateAsync(new IdentityRole(SD.EditorRole)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.CustomerRole)).GetAwaiter().GetResult();
             }
-            _userManager.CreateAsync(new ApplicationUser
+            var existingAdmin = _userManager.FindByEmailAsync("Admin@gmail.com").GetAwaiter().GetResult();
+            if (existingAdmin == null)
             {
-                UserName = "Mohamed",
-                Email = "Admin@gmail.com",
-                Name = "Mohamed",
-                City = "Cairo",
-                Address = "Cairo"
-            }, "Admin123*").GetAwaiter().GetResult();
-            ApplicationUser? user = _context.ApplicationUsers.FirstOrDefault(u => u.Email == "Admin@gmail.com");
-            if (user != null)
+                _userManager.CreateAsync(new ApplicationUser
+                {
+                    UserName = "Admin",
+                    Email = "Admin@gmail.com",
+                    Name = "Admin",
+                    City = "Cairo",
+                    Address = "Cairo",
+                    EmailConfirmed = true
+                }, "Admin123*").GetAwaiter().GetResult();
+
+                var user = _userManager.FindByEmailAsync("Admin@gmail.com").GetAwaiter().GetResult();
+                if (user != null)
+                {
+                    _userManager.AddToRoleAsync(user, SD.AdminRole).GetAwaiter().GetResult();
+                }
+            }
+            else
             {
-                _userManager.AddToRoleAsync(user, SD.AdminRole).GetAwaiter().GetResult();
+                // Ensure existing admin is confirmed
+                if (!existingAdmin.EmailConfirmed)
+                {
+                    existingAdmin.EmailConfirmed = true;
+                    _userManager.UpdateAsync(existingAdmin).GetAwaiter().GetResult();
+                }
             }
 
         }

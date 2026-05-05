@@ -1,7 +1,7 @@
-﻿@model ShoppingCart
+@model ShoppingCart
 
 @{
-    ViewData["Title"] = "تفاصيل المنتج";
+    ViewData["Title"] = "Product Details";
 }
 
 <style>
@@ -10,7 +10,7 @@
         padding-bottom: 5rem;
     }
 
-    /* صندوق الصورة المحسن */
+    /* Enhanced Image Card */
     .product-image-card {
         background-color: #f8fafc;
         border-radius: 30px;
@@ -20,7 +20,7 @@
         justify-content: center;
         border: 1px solid #e2e8f0;
         transition: 0.3s;
-        min-height: 400px; /* لضمان عدم قفز المحتوى أثناء التحميل */
+        min-height: 400px; /* Prevent content jumping during load */
     }
 
     .product-image-card:hover {
@@ -33,17 +33,17 @@
         border-radius: 15px;
         filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
         
-        /* تأثير الظهور الناعم */
+        /* Smooth fade-in effect */
         opacity: 0;
         transition: opacity 0.6s ease-in-out;
     }
 
-    /* يظهر الصورة فور اكتمال تحميلها */
+    /* Show image once loaded */
     .product-image-card img[src] {
         opacity: 1;
     }
 
-    /* التصنيفات والأسعار */
+    /* Categories and Prices */
     .category-label {
         background-color: #eff6ff;
         color: #2563eb;
@@ -68,7 +68,7 @@
         margin-right: 10px;
     }
 
-    /* تحسين إدخال الكمية */
+    /* Quantity Input */
     .qty-wrapper {
         display: flex;
         align-items: center;
@@ -105,7 +105,7 @@
         font-weight: 700;
     }
 
-    /* زر الإضافة للسلة */
+    /* Add to Cart Button */
     .btn-add-to-cart {
         background: linear-gradient(to right, #0f172a, #1e293b);
         color: white;
@@ -142,7 +142,7 @@
         <div class="row gx-lg-5 align-items-center">
             <div class="col-md-6 mb-4 mb-md-0">
                 <div class="product-image-card shadow-sm">
-                    @* إضافة loading="lazy" و onload لضمان انسيابية الظهور *@
+                    @* Add loading="lazy" and onload for smooth fade-in *@
                     <img src="/@Model.Product.Img.TrimStart('/')" 
                          alt="@Model.Product.Name" 
                          loading="lazy" 
@@ -176,14 +176,14 @@
 
                     <button class="btn btn-add-to-cart shadow" type="submit">
                         <i class="bi-cart-fill me-2"></i>
-                        أضف إلى السلة
+                        Add to Cart
                     </button>
                 </div>
 
                 <div class="trust-badges justify-content-center justify-content-md-start">
-                    <span><i class="bi bi-truck me-1"></i> شحن سريع</span>
-                    <span><i class="bi bi-shield-check me-1"></i> ضمان عامين</span>
-                    <span><i class="bi bi-arrow-repeat me-1"></i> استرجاع مجاني</span>
+                    <span><i class="bi bi-truck me-1"></i> Fast Shipping</span>
+                    <span><i class="bi bi-shield-check me-1"></i> 2-Year Warranty</span>
+                    <span><i class="bi bi-arrow-repeat me-1"></i> Free Returns</span>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
-﻿@{
-    ViewBag.PageTitle = "إدارة الطلبات";
-    ViewBag.CardTitle = "قائمة الطلبات المستلمة";
+@{
+    ViewBag.PageTitle = "Orders Management";
+    ViewBag.CardTitle = "Received Orders List";
     Layout = "~/Views/Shared/_Dashboard.cshtml";
 }
 
@@ -9,12 +9,12 @@
         <div class="card-header bg-white py-3">
             <div class="d-flex align-items-center justify-content-between">
                 <h5 class="m-0 font-weight-bold text-primary">
-                    <i class="fas fa-shipping-fast me-2"></i> متابعة حركة المبيعات
+                    <i class="fas fa-shipping-fast me-2"></i> Sales Tracking
                 </h5>
                 <div class="btn-group">
-                    <button class="btn btn-outline-secondary btn-sm">الكل</button>
-                    <button class="btn btn-outline-primary btn-sm">قيد التنفيذ</button>
-                    <button class="btn btn-outline-success btn-sm">تم التوصيل</button>
+                    <button class="btn btn-outline-secondary btn-sm">All</button>
+                    <button class="btn btn-outline-primary btn-sm">In Progress</button>
+                    <button class="btn btn-outline-success btn-sm">Delivered</button>
                 </div>
             </div>
         </div>
@@ -24,13 +24,13 @@
                 <table id="mytable" class="table table-hover align-middle" width="100%">
                     <thead class="bg-light text-secondary">
                         <tr>
-                            <th class="border-0">رقم الطلب</th>
-                            <th class="border-0">العميل</th>
-                            <th class="border-0">رقم الهاتف</th>
-                            <th class="border-0">البريد الإلكتروني</th>
-                            <th class="border-0">حالة الطلب</th>
-                            <th class="border-0">الإجمالي</th>
-                            <th class="border-0 text-center">الإجراءات</th>
+                            <th class="border-0">Order ID</th>
+                            <th class="border-0">Customer</th>
+                            <th class="border-0">Phone Number</th>
+                            <th class="border-0">Email</th>
+                            <th class="border-0">Order Status</th>
+                            <th class="border-0">Total</th>
+                            <th class="border-0 text-center">Actions</th>
                         </tr>
                     </thead>
                 </table>

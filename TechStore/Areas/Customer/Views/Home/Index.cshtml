@@ -1,14 +1,14 @@
-﻿@using X.PagedList
+@using X.PagedList
 @using X.PagedList.Mvc.Core
 
 @model IPagedList<TechStore.Entities.Models.Product> 
 
 @{
-    ViewData["Title"] = "متجر الإلكترونيات";
+    ViewData["Title"] = "Electronics Store";
 }
 
 <style>
-    /* تنسيق بطاقة المنتج العصرية */
+    /* Product Card Styling */
     .product-grid-card {
         border: none;
         border-radius: 20px;
@@ -22,10 +22,10 @@
         box-shadow: 0 20px 40px rgba(0,0,0,0.08);
     }
 
-    /* حاوية الصورة */
+    /* Image Container */
     .img-container {
         position: relative;
-        background-color: #f8fafc; /* لون خلفية مؤقت قبل تحميل الصورة */
+        background-color: #f8fafc; /* Placeholder background color */
         height: 220px;
         display: flex;
         align-items: center;
@@ -39,10 +39,10 @@
         max-height: 100%;
         object-fit: contain;
         transition: transform 0.5s ease, opacity 0.5s ease-in-out;
-        opacity: 0; /* تبدأ الصورة مخفية لتظهر بنعومة */
+        opacity: 0; /* Image starts hidden */
     }
 
-    /* تأثير الظهور الناعم بمجرد تحميل الصورة */
+    /* Fade in effect when image loads */
     .img-container img[src] {
         opacity: 1;
     }
@@ -51,7 +51,7 @@
         transform: scale(1.1);
     }
 
-    /* تفاصيل المنتج */
+    /* Product Details */
     .product-info {
         padding: 1.5rem;
     }
@@ -81,7 +81,7 @@
         transition: 0.3s;
     }
 
-    /* تنسيق الترقيم (Pagination) */
+    /* Pagination Styling */
     .pagination-container {
         margin-top: 4rem;
         margin-bottom: 2rem;
@@ -112,10 +112,10 @@
                     <div class="product-grid-card h-100 shadow-sm">
                         <div class="img-container">
                             <a asp-action="Details" asp-route-ProductId="@item.Id">
-                                @* إضافة loading="lazy" تجعل المتصفح يحمل الصور عند الوصول إليها فقط *@
+                                @* Add loading="lazy" to defer image loading *@
                                 <img src="/@item.Img.TrimStart('/')" alt="@item.Name" loading="lazy" />
                             </a>
-                            <span class="position-absolute top-0 start-0 m-3 badge rounded-pill bg-primary shadow-sm" style="font-size: 0.7rem;">جديد</span>
+                            <span class="position-absolute top-0 start-0 m-3 badge rounded-pill bg-primary shadow-sm" style="font-size: 0.7rem;">New</span>
                         </div>
 
                         <div class="product-info text-center">
@@ -126,7 +126,7 @@
                             
                             <div class="d-grid">
                                 <a asp-action="Details" asp-route-ProductId="@item.Id" class="btn btn-outline-primary btn-view">
-                                    <i class="bi bi-eye me-1"></i> عرض التفاصيل
+                                    <i class="bi bi-eye me-1"></i> View Details
                                 </a>
                             </div>
                         </div>

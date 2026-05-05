@@ -30,8 +30,8 @@ namespace TechStore.Web.Areas.Identity.Pages.Account
         public string Email { get; set; } = default!;
 
         [BindProperty]
-        [Required(ErrorMessage = "يرجى إدخال رمز التفعيل بالكامل")]
-        [StringLength(6, MinimumLength = 6, ErrorMessage = "الرمز يجب أن يتكون من 6 أرقام")]
+        [Required(ErrorMessage = "Please enter the activation code completely")]
+        [StringLength(6, MinimumLength = 6, ErrorMessage = "The code must be exactly 6 digits")]
         public string OTP { get; set; } = default!;
 
         public void OnGet(string email)
@@ -63,7 +63,7 @@ namespace TechStore.Web.Areas.Identity.Pages.Account
                 return RedirectToPage("/Index", new { area = "Customer" });
             }
 
-            ModelState.AddModelError(string.Empty, "رمز التفعيل غير صحيح أو انتهت صلاحيته.");
+            ModelState.AddModelError(string.Empty, "The activation code is incorrect or has expired.");
             return Page();
         }
     }

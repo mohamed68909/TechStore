@@ -1,9 +1,9 @@
-﻿@model ShoppingCartVM
+@model ShoppingCartVM
 @using Microsoft.Extensions.Options
 @inject IOptions<TechStore.Utilities.StripeData> Stripe
 
 @{
-    ViewData["Title"] = "اتمام الشراء";
+    ViewData["Title"] = "Checkout";
 }
 
 <style>
@@ -18,7 +18,7 @@
         box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     }
 
-    /* تنسيق المدخلات */
+    /* Input Styling */
     .form-label {
         font-weight: 700;
         font-size: 0.85rem;
@@ -42,7 +42,7 @@
             border-color: #dee2e6;
         }
 
-    /* ملخص السلة */
+    /* Cart Summary */
     .summary-item {
         border-bottom: 1px dashed #e2e8f0;
         padding: 15px 0;
@@ -106,49 +106,49 @@
             <div class="col-lg-7">
                 <div class="card checkout-card">
                     <div class="card-header bg-white py-3 border-0">
-                        <h5 class="fw-bold mb-0 text-dark"><i class="bi bi-geo-alt me-2 text-primary"></i>بيانات الشحن والاستلام</h5>
+                        <h5 class="fw-bold mb-0 text-dark"><i class="bi bi-geo-alt me-2 text-primary"></i>Shipping & Receiving Details</h5>
                     </div>
                     <div class="card-body p-4">
                         <div class="row g-3">
                             <div class="col-12">
-                                <label class="form-label">الاسم الكامل</label>
+                                <label class="form-label">Full Name</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-person"></i></span>
-                                    <input asp-for="OrderHeader.Name" class="form-control" placeholder="أدخل اسم المستلم" />
+                                    <input asp-for="OrderHeader.Name" class="form-control" placeholder="Enter recipient name" />
                                 </div>
                                 <span asp-validation-for="OrderHeader.Name" class="text-danger small"></span>
                             </div>
 
                             <div class="col-md-6">
-                                <label class="form-label">رقم الهاتف</label>
+                                <label class="form-label">Phone Number</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-phone"></i></span>
-                                    <input asp-for="OrderHeader.PhoneNumber" class="form-control" placeholder="01xxxxxxxxx" />
+                                    <input asp-for="OrderHeader.PhoneNumber" class="form-control" placeholder="e.g. 1234567890" />
                                 </div>
                                 <span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger small"></span>
                             </div>
 
                             <div class="col-md-6">
-                                <label class="form-label">المدينة</label>
+                                <label class="form-label">City</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-building"></i></span>
-                                    <input asp-for="OrderHeader.City" class="form-control" placeholder="مثلاً: الإسكندرية" />
+                                    <input asp-for="OrderHeader.City" class="form-control" placeholder="e.g. New York" />
                                 </div>
                                 <span asp-validation-for="OrderHeader.City" class="text-danger small"></span>
                             </div>
 
                             <div class="col-12">
-                                <label class="form-label">العنوان بالتفصيل</label>
+                                <label class="form-label">Detailed Address</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-map"></i></span>
-                                    <input asp-for="OrderHeader.Address" class="form-control" placeholder="رقم الشارع، المبنى، الشقة" />
+                                    <input asp-for="OrderHeader.Address" class="form-control" placeholder="Street number, Building, Apartment" />
                                 </div>
                                 <span asp-validation-for="OrderHeader.Address" class="text-danger small"></span>
                             </div>
                         </div>
 
                         <div class="mt-4 p-3 rounded-3 bg-light border">
-                            <small class="text-muted"><i class="bi bi-shield-lock me-2 text-success"></i>معلوماتك محمية ومشفرة بأعلى معايير الأمان التقنية.</small>
+                            <small class="text-muted"><i class="bi bi-shield-lock me-2 text-success"></i>Your information is protected and encrypted with the highest technical security standards.</small>
                         </div>
                     </div>
                 </div>
@@ -157,8 +157,8 @@
             <div class="col-lg-5">
                 <div class="card checkout-card h-100">
                     <div class="card-header bg-white py-3 border-0 d-flex justify-content-between align-items-center">
-                        <h5 class="fw-bold mb-0 text-dark">ملخص الطلب</h5>
-                        <a href="/Customer/Cart/Index" class="btn btn-link btn-sm text-decoration-none fw-bold">تعديل السلة</a>
+                        <h5 class="fw-bold mb-0 text-dark">Order Summary</h5>
+                        <a href="/Customer/Cart/Index" class="btn btn-link btn-sm text-decoration-none fw-bold">Edit Cart</a>
                     </div>
                     <div class="card-body p-4">
                         <div class="order-items-list mb-4" style="max-height: 350px; overflow-y: auto;">
@@ -171,7 +171,7 @@
                                     </div>
                                     <div class="flex-grow-1">
                                         <h6 class="mb-0 fw-bold small text-dark">@item.Product.Name</h6>
-                                        <small class="text-muted">سعر الوحدة: @item.Product.Price.ToString("c")</small>
+                                        <small class="text-muted">Unit Price: @item.Product.Price.ToString("c")</small>
                                     </div>
                                     <div class="fw-bold text-dark small">
                                         @((item.Product.Price * item.Count).ToString("c"))
@@ -182,21 +182,21 @@
 
                         <div class="total-box mt-auto shadow">
                             <div class="d-flex justify-content-between align-items-center mb-2 opacity-75">
-                                <span>المجموع الفرعي</span>
+                                <span>Subtotal</span>
                                 <span>@Model.OrderHeader.TotalPrice.ToString("c")</span>
                             </div>
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="fw-bold">الإجمالي النهائي</span>
+                                <span class="fw-bold">Total Amount</span>
                                 <h3 class="mb-0 fw-bold">@Model.OrderHeader.TotalPrice.ToString("c")</h3>
                             </div>
                             <button type="submit" class="btn btn-primary btn-place-order w-100 shadow-lg text-white">
-                                تأكيد الطلب والدفع <i class="bi bi-credit-card ms-2"></i>
+                                Confirm Order & Pay <i class="bi bi-credit-card ms-2"></i>
                             </button>
                         </div>
 
                         <div class="text-center mt-3">
                             <a href="/Customer/Home" class="text-muted small text-decoration-none">
-                                <i class="bi bi-arrow-right me-1"></i> العودة للتسوق
+                                <i class="bi bi-arrow-left me-1"></i> Back to Shopping
                             </a>
                         </div>
                     </div>

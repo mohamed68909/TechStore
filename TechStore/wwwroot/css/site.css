@@ -526,3 +526,27 @@
     transform: translateY(-3px);
 }
 
+/* Password Toggle Styles */
+.password-toggle-wrapper {
+    position: relative;
+}
+
+.password-toggle-icon {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b;
+    z-index: 10;
+    font-size: 1.2rem;
+    transition: color 0.2s;
+}
+
+.password-toggle-icon:hover {
+    color: #2563eb;
+}
+
+.form-v2-control.password-input-with-toggle {
+    padding-left: 45px;
+}

@@ -1,9 +1,9 @@
-﻿@using TechStore.Entities.ViewModels
+@using TechStore.Entities.ViewModels
 @model ProductVM
 
 @{
-    ViewBag.PageTitle = "إدارة المنتجات";
-    ViewBag.CardTitle = "تعديل بيانات المنتج";
+    ViewBag.PageTitle = "Products Management";
+    ViewBag.CardTitle = "Edit Product Details";
     Layout = "~/Views/Shared/_Dashboard.cshtml";
 }
 
@@ -17,21 +17,21 @@
             <div class="col-md-8">
                 <div class="card shadow-sm border-0 mb-4">
                     <div class="card-header bg-white py-3">
-                        <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-info-circle me-2"></i> معلومات المنتج</h6>
+                        <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-info-circle me-2"></i> Product Information</h6>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-6 mb-3">
-                                <label asp-for="Product.Name" class="form-label fw-bold">اسم المنتج</label>
+                                <label asp-for="Product.Name" class="form-label fw-bold">Product Name</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light"><i class="fas fa-tag text-muted"></i></span>
-                                    <input asp-for="Product.Name" class="form-control shadow-none" placeholder="مثلاً: iPhone 15 Pro" />
+                                    <input asp-for="Product.Name" class="form-control shadow-none" placeholder="e.g. iPhone 15 Pro" />
                                 </div>
                                 <span asp-validation-for="Product.Name" class="text-danger small"></span>
                             </div>
 
                             <div class="form-group col-md-6 mb-3">
-                                <label asp-for="Product.Price" class="form-label fw-bold">السعر (ج.م)</label>
+                                <label asp-for="Product.Price" class="form-label fw-bold">Price (EGP)</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light"><i class="fas fa-money-bill-wave text-muted"></i></span>
                                     <input asp-for="Product.Price" class="form-control shadow-none" />
@@ -40,14 +40,14 @@
                             </div>
 
                             <div class="form-group col-12 mb-3">
-                                <label asp-for="Product.CategoryId" class="form-label fw-bold">القسم</label>
+                                <label asp-for="Product.CategoryId" class="form-label fw-bold">Category</label>
                                 <select asp-for="Product.CategoryId" class="form-select shadow-none" asp-items="Model.CategoryList">
-                                    <option disabled selected>-- اختر القسم --</option>
+                                    <option disabled selected>-- Select Category --</option>
                                 </select>
                             </div>
 
                             <div class="form-group col-12 mb-3">
-                                <label asp-for="Product.Description" class="form-label fw-bold">وصف المنتج</label>
+                                <label asp-for="Product.Description" class="form-label fw-bold">Product Description</label>
                                 <textarea id="mytextarea" asp-for="Product.Description" class="form-control"></textarea>
                                 <span asp-validation-for="Product.Description" class="text-danger small"></span>
                             </div>
@@ -59,7 +59,7 @@
             <div class="col-md-4">
                 <div class="card shadow-sm border-0 mb-4">
                     <div class="card-header bg-white py-3">
-                        <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-image me-2"></i> صورة المنتج</h6>
+                        <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-image me-2"></i> Product Image</h6>
                     </div>
                     <div class="card-body text-center">
                         <div class="image-preview-container mb-3">
@@ -67,10 +67,10 @@
                         </div>
                         <div class="form-group">
                             <label for="imgfile" class="btn btn-outline-primary btn-sm w-100">
-                                <i class="fas fa-upload me-2"></i> تغيير الصورة
+                                <i class="fas fa-upload me-2"></i> Change Image
                                 <input type="file" name="file" id="imgfile" class="form-control d-none" onchange="previewImage(event)" />
                             </label>
-                            <small class="text-muted d-block mt-2">يفضل استخدام صور PNG بخلفية بيضاء</small>
+                            <small class="text-muted d-block mt-2">PNG with white background preferred</small>
                         </div>
                     </div>
                 </div>
@@ -78,10 +78,10 @@
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
                         <button type="submit" class="btn btn-success w-100 mb-2">
-                            <i class="fas fa-save me-2"></i> حفظ التعديلات
+                            <i class="fas fa-save me-2"></i> Save Changes
                         </button>
                         <a asp-action="Index" class="btn btn-light w-100">
-                            <i class="fas fa-arrow-left me-2"></i> العودة للقائمة
+                            <i class="fas fa-arrow-left me-2"></i> Back to List
                         </a>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
     }
 
     <script>
-        // تفعيل محرر النصوص TinyMCE
+        // TinyMCE configuration
         tinymce.init({
             selector: '#mytextarea',
             height: 300,
@@ -104,7 +104,7 @@
             toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent'
         });
 
-        // وظيفة معاينة الصورة فور اختيارها
+        // Image preview
         function previewImage(event) {
             var reader = new FileReader();
             reader.onload = function () {

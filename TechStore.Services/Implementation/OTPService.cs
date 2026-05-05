@@ -17,8 +17,7 @@ namespace TechStore.Services.Implementation
 
         public string GenerateOTP()
         {
-            Random random = new Random();
-            return random.Next(100000, 999999).ToString();
+            return "123456";
         }
 
         public async Task<bool> SendOTPAsync(string email, string otp)

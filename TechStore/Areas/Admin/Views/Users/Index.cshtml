@@ -2,18 +2,18 @@
 @model IEnumerable<ApplicationUser>
 
 @{
-    ViewBag.PageTitle = "إدارة المستخدمين";
-    ViewBag.CardTitle = "قائمة أعضاء المتجر";
+    ViewBag.PageTitle = "Users Management";
+    ViewBag.CardTitle = "Store Members List";
 }
 
 <div class="container-fluid">
     <div class="card shadow-sm border-0">
         <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
             <h5 class="m-0 font-weight-bold text-primary">
-                <i class="fas fa-users-cog me-2"></i> الصلاحيات والمستخدمين
+                <i class="fas fa-users-cog me-2"></i> Roles and Users
             </h5>
             <a class="btn btn-primary btn-sm px-4 shadow-sm" href="/Identity/Account/Register">
-                <i class="fas fa-user-plus"></i> إضافة مستخدم جديد
+                <i class="fas fa-user-plus"></i> Add New User
             </a>
         </div>
 
@@ -22,11 +22,11 @@
                 <table class="table table-hover align-middle">
                     <thead class="bg-light text-secondary">
                         <tr>
-                            <th class="border-0">المستخدم</th>
-                            <th class="border-0">البريد الإلكتروني</th>
-                            <th class="border-0">رقم الهاتف</th>
-                            <th class="border-0">الحالة</th>
-                            <th class="border-0 text-center">الإجراءات</th>
+                            <th class="border-0">User</th>
+                            <th class="border-0">Email</th>
+                            <th class="border-0">Phone Number</th>
+                            <th class="border-0">Status</th>
+                            <th class="border-0 text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,26 +51,26 @@
                                     @if (item.LockoutEnd == null || item.LockoutEnd < DateTimeOffset.UtcNow)
                                     {
                                         <span class="badge badge-status-active">
-                                            <i class="fas fa-check-circle me-1"></i> نشط
+                                            <i class="fas fa-check-circle me-1"></i> Active
                                         </span>
                                     }
                                     else
                                     {
                                         <span class="badge badge-status-locked">
-                                            <i class="fas fa-user-slash me-1"></i> محظور
+                                            <i class="fas fa-user-slash me-1"></i> Locked
                                         </span>
                                     }
                                 </td>
                                 <td class="text-center">
                                     @if (item.LockoutEnd == null || item.LockoutEnd < DateTimeOffset.UtcNow)
                                     {
-                                        <a class="btn btn-outline-success btn-sm btn-action" asp-action="LockUnlock" asp-route-id="@item.Id" title="قفل الحساب">
+                                        <a class="btn btn-outline-success btn-sm btn-action" asp-action="LockUnlock" asp-route-id="@item.Id" title="Lock Account">
                                             <i class="fas fa-lock-open"></i>
                                         </a>
                                     }
                                     else
                                     {
-                                        <a class="btn btn-danger btn-sm btn-action shadow-sm" asp-action="LockUnlock" asp-route-id="@item.Id" title="فك الحظر">
+                                        <a class="btn btn-danger btn-sm btn-action shadow-sm" asp-action="LockUnlock" asp-route-id="@item.Id" title="Unlock Account">
                                             <i class="fas fa-lock"></i>
                                         </a>
                                     }

@@ -1,11 +1,13 @@
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TechStore.Entities.Models;
 using TechStore.Services.Interfaces;
+using TechStore.Utilities;
 
 namespace TechStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.AdminRole)]
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
