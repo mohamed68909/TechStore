@@ -1,15 +1,51 @@
-﻿@inject SignInManager<IdentityUser> SignInManager
+@using TechStore.Entities.Models
+@inject SignInManager<ApplicationUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
-<ul class="nav nav-pills flex-column">
-    <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Password</a></li>
-    @if (hasExternalLogins)
-    {
-        <li id="external-logins" class="nav-item"><a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>
+<div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+    <div class="card-header bg-primary text-white py-3 border-0">
+        <h6 class="m-0 fw-bold"><i class="bi bi-person-gear me-2"></i>Settings</h6>
+    </div>
+    <div class="list-group list-group-flush profile-nav-group">
+        <a class="list-group-item list-group-item-action border-0 py-3 @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">
+            <i class="bi bi-person-circle me-3 text-primary"></i>Profile
+        </a>
+        <a class="list-group-item list-group-item-action border-0 py-3 @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">
+            <i class="bi bi-envelope-at me-3 text-primary"></i>Email
+        </a>
+        <a class="list-group-item list-group-item-action border-0 py-3 @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">
+            <i class="bi bi-shield-lock me-3 text-primary"></i>Password
+        </a>
+        @if (hasExternalLogins)
+        {
+            <a id="external-login" class="list-group-item list-group-item-action border-0 py-3 @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">
+                <i class="bi bi-box-arrow-in-right me-3 text-primary"></i>Social Links
+            </a>
+        }
+        <a class="list-group-item list-group-item-action border-0 py-3 @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">
+            <i class="bi bi-shield-check me-3 text-primary"></i>2FA Auth
+        </a>
+        <a class="list-group-item list-group-item-action border-0 py-3 @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">
+            <i class="bi bi-database-lock me-3 text-primary"></i>Personal Data
+        </a>
+    </div>
+</div>
+
+<style>
+    .profile-nav-group .list-group-item {
+        font-weight: 600;
+        color: #475569;
+        transition: 0.2s;
     }
-    <li class="nav-item"><a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Personal data</a></li>
-</ul>
+    .profile-nav-group .list-group-item:hover {
+        background-color: #f1f5f9;
+        color: var(--primary-color);
+        padding-inline-start: 1.5rem;
+    }
+    .profile-nav-group .active {
+        background-color: #eff6ff !important;
+        color: var(--primary-color) !important;
+        border-inline-start: 4px solid var(--primary-color) !important;
+    }
+</style>
