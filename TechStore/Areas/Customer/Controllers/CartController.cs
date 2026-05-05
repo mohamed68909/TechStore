@@ -28,11 +28,19 @@ public class CartController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult POSTSummary(ShoppingCartVM ShoppingCartVM)
     {
-        var domain = Request.Scheme + "://" + Request.Host.Value + "/";
-        var session = _cartService.CreateStripeSession(ShoppingCartVM, GetUserId(), domain);
+        try
+        {
+            var domain = Request.Scheme + "://" + Request.Host.Value + "/";
+            var session = _cartService.CreateStripeSession(ShoppingCartVM, GetUserId(), domain);
 
-        Response.Headers.Append("Location", session.Url);
-        return new StatusCodeResult(303);
+            Response.Headers.Append("Location", session.Url);
+            return new StatusCodeResult(303);
+        }
+        catch (Exception ex)
+        {
+            TempData["error"] = "Payment Service Error: " + ex.Message;
+            return RedirectToAction("Summary");
+        }
     }
 
     public IActionResult OrderConfirmation(int id)

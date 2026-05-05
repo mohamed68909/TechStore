@@ -78,7 +78,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-StripeConfiguration.ApiKey = builder.Configuration.GetSection("stripe:Secretkey").Get<string>();
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("stripe:secretkey").Get<string>();
 
 app.UseAuthentication();
 

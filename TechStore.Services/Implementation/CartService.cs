@@ -36,10 +36,17 @@ namespace TechStore.Services.Implementation
             vm.OrderHeader.ApplicationUser = user;
             if (user != null)
             {
-                vm.OrderHeader.Name = user.Name;
-                vm.OrderHeader.Address = user.Address;
-                vm.OrderHeader.City = user.City;
-                vm.OrderHeader.PhoneNumber = user.PhoneNumber;
+                vm.OrderHeader.Name = user.Name ?? string.Empty;
+                vm.OrderHeader.Address = user.Address ?? string.Empty;
+                vm.OrderHeader.City = user.City ?? string.Empty;
+                vm.OrderHeader.PhoneNumber = user.PhoneNumber ?? string.Empty;
+            }
+            else
+            {
+                vm.OrderHeader.Name = string.Empty;
+                vm.OrderHeader.Address = string.Empty;
+                vm.OrderHeader.City = string.Empty;
+                vm.OrderHeader.PhoneNumber = string.Empty;
             }
 
             return vm;
