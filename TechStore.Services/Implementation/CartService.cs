@@ -34,10 +34,13 @@ namespace TechStore.Services.Implementation
             var user = _unitOfWork.ApplicationUser.GetFirstorDefault(x => x.Id == userId);
 
             vm.OrderHeader.ApplicationUser = user;
-            vm.OrderHeader.Name = user.Name;
-            vm.OrderHeader.Address = user.Address;
-            vm.OrderHeader.City = user.City;
-            vm.OrderHeader.PhoneNumber = user.PhoneNumber;
+            if (user != null)
+            {
+                vm.OrderHeader.Name = user.Name;
+                vm.OrderHeader.Address = user.Address;
+                vm.OrderHeader.City = user.City;
+                vm.OrderHeader.PhoneNumber = user.PhoneNumber;
+            }
 
             return vm;
         }
