@@ -68,5 +68,19 @@ namespace TechStore.Areas.Admin.Controllers
             _orderService.CancelOrder(OrderVM.OrderHeader.Id);
             return RedirectToAction("Details", new { orderid = OrderVM.OrderHeader.Id });
         }
+
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                _orderService.DeleteOrder(id);
+                return Json(new { success = true, message = "Order deleted successfully." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error: " + ex.Message });
+            }
+        }
     }
 }

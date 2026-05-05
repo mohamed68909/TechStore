@@ -19,15 +19,17 @@ function loaddata() {
                 "data": "id",
                 "render": function (data) {
                     return `
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-center gap-2">
                             <a href="/Admin/Order/Details?orderid=${data}" class="btn btn-outline-info btn-action" title="View Details">
                                 <i class="fas fa-eye"></i>
                             </a>
+                            <button onclick="DeleteItem('/Admin/Order/Delete?id=${data}')" class="btn btn-outline-danger btn-action" title="Delete Order">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </div>
                     `
                 }
-
-                }
+            }
 
             
 
