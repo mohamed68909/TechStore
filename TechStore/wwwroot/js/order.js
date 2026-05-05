@@ -1,4 +1,4 @@
-﻿var dtble;
+var dtble;
 $(document).ready(function () {
     loaddata();
 });
@@ -19,10 +19,12 @@ function loaddata() {
                 "data": "id",
                 "render": function (data) {
                     return `
-                            <a href="/Admin/Order/Details?orderid=${data}" class="btn btn-warning">Details</a>
-                            
-                            `
-                    
+                        <div class="d-flex justify-content-center">
+                            <a href="/Admin/Order/Details?orderid=${data}" class="btn btn-outline-info btn-action" title="View Details">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                        </div>
+                    `
                 }
 
                 }

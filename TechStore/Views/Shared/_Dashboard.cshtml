@@ -24,9 +24,53 @@
         }
 
         body {
-            font-family: 'Cairo', 'Inter', sans-serif;
+            font-family: 'Inter', 'Cairo', sans-serif;
             background-color: var(--content-bg);
             color: #1e293b;
+        }
+
+        /* Avatar and Status Badges */
+        .avatar-sm {
+            height: 36px;
+            width: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .avatar-title {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        .bg-soft-primary { background-color: rgba(37, 99, 235, 0.1) !important; }
+        
+        .badge-status-active {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #059669;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .badge-status-locked {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .bg-soft-info { background-color: rgba(6, 182, 212, 0.1) !important; }
+
+        .btn-action {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px !important;
         }
 
         /* Customize Scrollbar to look modern */
@@ -165,10 +209,12 @@
             <div class="sidebar">
                 <div class="user-panel mt-4 pb-4 mb-4 d-flex align-items-center justify-content-center border-bottom border-secondary">
                     <div class="image">
-                        <img src="/img/user2-160x160.jpg" class="img-circle elevation-2 border border-primary" alt="User Image">
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold shadow-sm border border-2 border-white" style="width: 40px; height: 40px;">
+                            A
+                        </div>
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block fw-bold text-white">System Admin</a>
+                        <a href="#" class="d-block fw-bold text-white">Administrator</a>
                     </div>
                 </div>
 

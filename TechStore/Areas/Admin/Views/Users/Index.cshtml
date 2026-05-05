@@ -37,10 +37,10 @@
                                     <div class="d-flex align-items-center">
                                         <div class="avatar-sm me-3">
                                             <span class="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                @item.Name.Substring(0, 1).ToUpper()
+                                                @((!string.IsNullOrEmpty(item.Name) ? item.Name.Substring(0, 1) : "U").ToUpper())
                                             </span>
                                         </div>
-                                        <span class="fw-bold text-dark">@item.Name</span>
+                                        <span class="fw-bold text-dark">@(item.Name ?? "No Name")</span>
                                     </div>
                                 </td>
                                 <td class="text-muted">@item.Email</td>

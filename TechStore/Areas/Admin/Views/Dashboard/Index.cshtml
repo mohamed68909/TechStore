@@ -1,105 +1,20 @@
-﻿@{
-    ViewBag.PageTitle = "لوحة التحكم";
-    ViewBag.CardTitle = "نظرة عامة على المتجر";
+@{
+    ViewBag.PageTitle = "Admin Dashboard";
+    ViewBag.CardTitle = "Store Statistics Overview";
 }
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-<style>
-    /* تنسيق الكروت الإحصائية */
-    .stat-card {
-        border: none;
-        border-radius: 15px;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-        color: white;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .stat-card .inner {
-            padding: 25px;
-            z-index: 2;
-            position: relative;
-        }
-
-        .stat-card h3 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .stat-card p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .stat-card .icon {
-            position: absolute;
-            right: 15px;
-            top: 15px;
-            font-size: 4rem;
-            opacity: 0.2;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover .icon {
-            transform: scale(1.1);
-            opacity: 0.3;
-        }
-
-    .stat-footer {
-        background: rgba(0,0,0,0.1);
-        padding: 10px;
-        text-align: center;
-        display: block;
-        color: rgba(255,255,255,0.8);
-        text-decoration: none;
-        font-weight: 600;
-        transition: 0.3s;
-    }
-
-        .stat-footer:hover {
-            background: rgba(0,0,0,0.2);
-            color: #fff;
-        }
-
-    /* التدرجات اللونية التقنية */
-    .bg-grad-blue {
-        background: linear-gradient(45deg, #2563eb, #3b82f6);
-    }
-
-    .bg-grad-green {
-        background: linear-gradient(45deg, #059669, #10b981);
-    }
-
-    .bg-grad-purple {
-        background: linear-gradient(45deg, #7c3aed, #8b5cf6);
-    }
-
-    .bg-grad-orange {
-        background: linear-gradient(45deg, #ea580c, #f97316);
-    }
-</style>
 
 <div class="row">
     <div class="col-lg-3 col-6">
         <div class="stat-card bg-grad-blue">
             <div class="inner">
                 <h3>@ViewBag.Orders</h3>
-                <p>إجمالي الطلبات</p>
+                <p>Total Orders</p>
             </div>
             <div class="icon">
                 <i class="fas fa-shopping-cart"></i>
             </div>
             <a href="/Admin/Order/Index" class="stat-footer">
-                تفاصيل أكثر <i class="fas fa-arrow-circle-right ms-1"></i>
+                View Details <i class="fas fa-arrow-circle-right ms-1"></i>
             </a>
         </div>
     </div>
@@ -108,13 +23,13 @@
         <div class="stat-card bg-grad-green">
             <div class="inner">
                 <h3>@ViewBag.ApprovedOrders</h3>
-                <p>طلبات تم قبولها</p>
+                <p>Approved Orders</p>
             </div>
             <div class="icon">
                 <i class="fas fa-check-double"></i>
             </div>
             <a href="/Admin/Order/Index" class="stat-footer">
-                تفاصيل أكثر <i class="fas fa-arrow-circle-right ms-1"></i>
+                View Details <i class="fas fa-arrow-circle-right ms-1"></i>
             </a>
         </div>
     </div>
@@ -123,13 +38,13 @@
         <div class="stat-card bg-grad-purple">
             <div class="inner">
                 <h3>@ViewBag.Users</h3>
-                <p>المستخدمين الجدد</p>
+                <p>New Customers</p>
             </div>
             <div class="icon">
                 <i class="fas fa-users"></i>
             </div>
             <a href="/Admin/Users/Index" class="stat-footer">
-                تفاصيل أكثر <i class="fas fa-arrow-circle-right ms-1"></i>
+                View Details <i class="fas fa-arrow-circle-right ms-1"></i>
             </a>
         </div>
     </div>
@@ -138,14 +53,93 @@
         <div class="stat-card bg-grad-orange">
             <div class="inner">
                 <h3>@ViewBag.Products</h3>
-                <p>إجمالي المنتجات</p>
+                <p>Total Products</p>
             </div>
             <div class="icon">
                 <i class="fas fa-boxes-stacked"></i>
             </div>
             <a href="/Admin/Product/Index" class="stat-footer">
-                تفاصيل أكثر <i class="fas fa-arrow-circle-right ms-1"></i>
+                View Details <i class="fas fa-arrow-circle-right ms-1"></i>
             </a>
         </div>
     </div>
 </div>
+
+<style>
+    /* Premium Stats Cards */
+    .stat-card {
+        border: none;
+        border-radius: 20px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+        color: white;
+        margin-bottom: 24px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+    }
+
+    .stat-card .inner {
+        padding: 30px;
+        z-index: 2;
+        position: relative;
+    }
+
+    .stat-card h3 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 8px;
+        letter-spacing: -1px;
+    }
+
+    .stat-card p {
+        font-size: 1.1rem;
+        font-weight: 600;
+        opacity: 0.85;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .stat-card .icon {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        font-size: 4.5rem;
+        opacity: 0.15;
+        transition: all 0.4s ease;
+    }
+
+    .stat-card:hover .icon {
+        transform: rotate(-10deg) scale(1.1);
+        opacity: 0.25;
+    }
+
+    .stat-footer {
+        background: rgba(0,0,0,0.15);
+        padding: 12px;
+        text-align: center;
+        display: block;
+        color: rgba(255,255,255,0.95);
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.9rem;
+        transition: 0.3s;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .stat-footer:hover {
+        background: rgba(0,0,0,0.25);
+        color: #fff;
+        letter-spacing: 1px;
+    }
+
+    /* Modern Gradients */
+    .bg-grad-blue { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+    .bg-grad-green { background: linear-gradient(135deg, #10b981, #059669); }
+    .bg-grad-purple { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+    .bg-grad-orange { background: linear-gradient(135deg, #f97316, #ea580c); }
+</style>

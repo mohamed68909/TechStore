@@ -1,4 +1,4 @@
-﻿var dtble;
+var dtble;
 $(document).ready(function () {
     loaddata();
 });
@@ -17,10 +17,15 @@ function loaddata() {
                 "data": "id",
                 "render": function (data) {
                     return `
-                            <a href="/Admin/Product/Edit/${data}" class="btn btn-success">Edit</a>
-                            <a onClick=DeleteItem("/Admin/Product/Delete/${data}") class="btn btn-danger">Delete</a>
-                            `
-                    
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="/Admin/Product/Edit/${data}" class="btn btn-outline-primary btn-action" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a onClick=DeleteItem("/Admin/Product/Delete/${data}") class="btn btn-outline-danger btn-action" title="Delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    `
                 }
 
                 }
