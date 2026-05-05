@@ -59,6 +59,16 @@ namespace TechStore.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Required]
+            [Display(Name = "Full Name")]
+            public string Name { get; set; }
+
+            [Display(Name = "Address")]
+            public string Address { get; set; }
+
+            [Display(Name = "City")]
+            public string City { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -70,7 +80,10 @@ namespace TechStore.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Name = user.Name,
+                Address = user.Address,
+                City = user.City
             };
         }
 
@@ -107,6 +120,19 @@ namespace TechStore.Areas.Identity.Pages.Account.Manage
                 if (!setPhoneResult.Succeeded)
                 {
                     StatusMessage = "Unexpected error when trying to set phone number.";
+                    return RedirectToPage();
+                }
+            }
+
+            if (Input.Name != user.Name || Input.Address != user.Address || Input.City != user.City)
+            {
+                user.Name = Input.Name;
+                user.Address = Input.Address;
+                user.City = Input.City;
+                var updateResult = await _userManager.UpdateAsync(user);
+                if (!updateResult.Succeeded)
+                {
+                    StatusMessage = "Unexpected error when trying to update profile.";
                     return RedirectToPage();
                 }
             }

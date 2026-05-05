@@ -6,42 +6,120 @@
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<div class="card border-0 shadow-sm rounded-4">
-    <div class="card-header bg-white py-3 border-0">
-        <h5 class="m-0 fw-bold text-dark"><i class="bi bi-person-lines-fill me-2 text-primary"></i>Profile Details</h5>
-    </div>
-    <div class="card-body p-4">
-        <partial name="_StatusMessage" for="StatusMessage" />
-        <form id="profile-form" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
-            
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <label asp-for="Username" class="form-label fw-bold text-muted small text-uppercase">Username</label>
-                    <div class="input-group">
-                        <span class="input-group-text bg-light border-0"><i class="bi bi-at text-primary"></i></span>
-                        <input asp-for="Username" class="form-control bg-light border-0 shadow-none py-2" placeholder="Username" disabled />
+<div class="profile-container">
+    <!-- User Header Card -->
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+        <div class="card-body p-0">
+            <div class="profile-header-bg" style="height: 120px; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);"></div>
+            <div class="px-4 pb-4">
+                <div class="d-flex align-items-end" style="margin-top: -50px;">
+                    <div class="bg-white p-1 rounded-circle shadow-sm">
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold" style="width: 100px; height: 100px; font-size: 2.5rem;">
+                            @Model.Input.Name.Substring(0, 1).ToUpper()
+                        </div>
+                    </div>
+                    <div class="ms-3 mb-2">
+                        <h4 class="fw-bold mb-0">@Model.Input.Name</h4>
+                        <p class="text-muted small mb-0"><i class="bi bi-envelope me-1"></i> @Model.Username</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
 
-                <div class="col-md-6 mb-4">
-                    <label asp-for="Input.PhoneNumber" class="form-label fw-bold text-muted small text-uppercase">Phone Number</label>
-                    <div class="input-group">
-                        <span class="input-group-text bg-light border-0"><i class="bi bi-phone text-primary"></i></span>
-                        <input asp-for="Input.PhoneNumber" class="form-control border-0 bg-light shadow-none py-2" placeholder="e.g. +20123456789"/>
+    <form id="profile-form" method="post">
+        <div class="row">
+            <!-- Account Information -->
+            <div class="col-lg-7">
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                    <div class="card-header bg-transparent border-0 pt-4 px-4">
+                        <h5 class="fw-bold mb-0"><i class="bi bi-person-badge me-2 text-primary"></i>Personal Information</h5>
                     </div>
-                    <span asp-validation-for="Input.PhoneNumber" class="text-danger small"></span>
+                    <div class="card-body p-4">
+                        <partial name="_StatusMessage" for="StatusMessage" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+                        
+                        <div class="mb-4">
+                            <label asp-for="Input.Name" class="form-label fw-semibold text-dark small text-uppercase ls-1">Full Name</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-0"><i class="bi bi-person text-muted"></i></span>
+                                <input asp-for="Input.Name" class="form-control bg-light border-0 shadow-none py-2" placeholder="Your full name" />
+                            </div>
+                            <span asp-validation-for="Input.Name" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Input.PhoneNumber" class="form-label fw-semibold text-dark small text-uppercase ls-1">Phone Number</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-0"><i class="bi bi-phone text-muted"></i></span>
+                                <input asp-for="Input.PhoneNumber" class="form-control border-0 bg-light shadow-none py-2" placeholder="e.g. +20123456789"/>
+                            </div>
+                            <span asp-validation-for="Input.PhoneNumber" class="text-danger small"></span>
+                        </div>
+                        
+                        <div class="mb-0">
+                            <label asp-for="Username" class="form-label fw-semibold text-dark small text-uppercase ls-1">Login Email (Read-only)</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-0"><i class="bi bi-at text-muted"></i></span>
+                                <input asp-for="Username" class="form-control bg-light border-0 shadow-none py-2" disabled />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="pt-2">
-                <button id="update-profile-button" type="submit" class="btn btn-primary px-5 py-2 fw-bold rounded-3 shadow-sm">
-                    <i class="bi bi-check2-circle me-2"></i>Update Profile
-                </button>
+            <!-- Address Information -->
+            <div class="col-lg-5">
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                    <div class="card-header bg-transparent border-0 pt-4 px-4">
+                        <h5 class="fw-bold mb-0"><i class="bi bi-geo-alt me-2 text-primary"></i>Shipping Address</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="mb-4">
+                            <label asp-for="Input.City" class="form-label fw-semibold text-dark small text-uppercase ls-1">City</label>
+                            <select asp-for="Input.City" class="form-select bg-light border-0 shadow-none py-2">
+                                <option value="Cairo">Cairo</option>
+                                <option value="Alexandria">Alexandria</option>
+                                <option value="Giza">Giza</option>
+                                <option value="Mansoura">Mansoura</option>
+                                <option value="Tanta">Tanta</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <span asp-validation-for="Input.City" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-0">
+                            <label asp-for="Input.Address" class="form-label fw-semibold text-dark small text-uppercase ls-1">Detailed Address</label>
+                            <textarea asp-for="Input.Address" class="form-control bg-light border-0 shadow-none py-2" rows="3" placeholder="Street name, building number, apartment..."></textarea>
+                            <span asp-validation-for="Input.Address" class="text-danger small"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button id="update-profile-button" type="submit" class="btn btn-primary py-3 fw-bold rounded-4 shadow-sm transition-all">
+                        <i class="bi bi-shield-check me-2"></i>Save Changes
+                    </button>
+                    <p class="text-center text-muted small mt-2">Your information is secure and encrypted.</p>
+                </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
+
+<style>
+    .ls-1 { letter-spacing: 0.5px; }
+    .transition-all { transition: all 0.3s ease; }
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2) !important;
+    }
+    .form-control:focus, .form-select:focus {
+        background-color: #fff !important;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1) !important;
+        border: 1px solid var(--primary-color) !important;
+    }
+</style>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
