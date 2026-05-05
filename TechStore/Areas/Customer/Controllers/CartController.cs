@@ -45,11 +45,14 @@ public class CartController : Controller
 
     public IActionResult OrderConfirmation(int id)
     {
-        var order = _cartService.GetSummaryViewModel(GetUserId()).OrderHeader; // ????? SessionId
-        var sessionId = _cartService.GetCartViewModel(GetUserId()).OrderHeader.SessionId; // ???? ????? ?? ??? DB
-
-        // ??????: ???? ????? ??? OrderHeader ?????? ?? ??????
-        _cartService.ConfirmOrderPayment(id, order.SessionId ?? string.Empty);
+        try
+        {
+            _cartService.ConfirmOrderPayment(id);
+        }
+        catch (Exception ex)
+        {
+            TempData["error"] = "Error confirming payment: " + ex.Message;
+        }
 
         HttpContext.Session.Clear();
         return View(id);

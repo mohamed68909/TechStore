@@ -112,13 +112,18 @@ namespace TechStore.Services.Implementation
             return session;
         }
 
-        public void ConfirmOrderPayment(int orderId, string sessionId)
+        public void ConfirmOrderPayment(int orderId)
         {
             var orderHeader = _unitOfWork.OrderHeader.GetFirstorDefault(u => u.Id == orderId);
+            if (orderHeader == null) return;
+
+            var sessionId = orderHeader.SessionId;
+            if (string.IsNullOrEmpty(sessionId)) return;
+
             var service = new SessionService();
             Session session = service.Get(sessionId);
 
-            if (session.PaymentStatus.ToLower() == "paid")
+            if (session.PaymentStatus?.ToLower() == "paid")
             {
                 _unitOfWork.OrderHeader.UpdateStatus(orderId, SD.Approve, SD.Approve);
                 orderHeader.PaymentIntentId = session.PaymentIntentId;
