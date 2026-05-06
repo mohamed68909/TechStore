@@ -80,11 +80,11 @@ app.UseRouting();
 
 StripeConfiguration.ApiKey = builder.Configuration.GetSection("stripe:secretkey").Get<string>();
 
+app.UseSession();
+
 app.UseAuthentication();
 
 app.UseAuthorization();
-
-app.UseSession();
 
 app.MapRazorPages();
 app.MapControllerRoute(

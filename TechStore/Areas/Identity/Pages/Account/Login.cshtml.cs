@@ -142,6 +142,13 @@ namespace TechStore.Web.Areas.Identity.Pages.Account
                 return RedirectToPage("./Lockout");
             }
 
+            if (result.IsNotAllowed)
+            {
+                // Email not confirmed — redirect to OTP verification
+                _logger.LogWarning("User {Email} tried to log in but email is not confirmed.", Input.Email);
+                return RedirectToPage("./VerifyOTP", new { email = Input.Email });
+            }
+
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return Page();
         }
