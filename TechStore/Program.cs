@@ -28,6 +28,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
     options => {
         options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(4);
         options.SignIn.RequireConfirmedAccount = true; // Required for OTP/Email verification
+        options.User.RequireUniqueEmail = true;
     })
     .AddDefaultTokenProviders().AddDefaultUI()
     .AddEntityFrameworkStores<ApplicationDbContext>();

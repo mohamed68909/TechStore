@@ -132,6 +132,13 @@ namespace TechStore.Web.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
+                var existingUser = await _userManager.FindByEmailAsync(Input.Email);
+                if (existingUser != null)
+                {
+                    ModelState.AddModelError(string.Empty, "Email already exists.");
+                    return Page();
+                }
+
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 user.City = Input.City;

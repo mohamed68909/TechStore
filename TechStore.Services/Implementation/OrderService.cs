@@ -90,6 +90,20 @@ namespace TechStore.Services.Implementation
             _unitOfWork.Complete();
         }
 
+        public void DeleteOrder(int orderId)
+        {
+            var orderHeader = _unitOfWork.OrderHeader.GetFirstorDefault(u => u.Id == orderId);
+            if (orderHeader == null) return;
+
+            // Delete order details first (foreign key constraint)
+            var orderDetails = _unitOfWork.OrderDetail.GetAll(u => u.OrderHeaderId == orderId).ToList();
+            _unitOfWork.OrderDetail.RemoveRange(orderDetails);
+
+            // Then delete the order header
+            _unitOfWork.OrderHeader.Remove(orderHeader);
+            _unitOfWork.Complete();
+        }
+
         public IEnumerable<OrderHeader> GetUserOrders(string userId)
         {
             return _unitOfWork.OrderHeader.GetAll(u => u.ApplicationUserId == userId)

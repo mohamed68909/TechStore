@@ -12,6 +12,7 @@ namespace TechStore.Services.Interfaces
         void UpdateStatus(int orderId, string orderStatus, string? paymentStatus = null);
         void ShipOrder(OrderHeader orderHeader);
         void CancelOrder(int orderId);
+        void DeleteOrder(int orderId);
 
         IEnumerable<OrderHeader> GetUserOrders(string userId);
     }
