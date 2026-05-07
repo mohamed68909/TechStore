@@ -131,12 +131,12 @@
             <input type="hidden" asp-for="OTP" id="fullOTP" />
             
             <div class="otp-inputs">
-                <input type="text" maxlength="1" class="otp-input" oninput="moveNext(this, 1)" onkeydown="moveBack(this, 1)">
-                <input type="text" maxlength="1" class="otp-input" oninput="moveNext(this, 2)" onkeydown="moveBack(this, 2)">
-                <input type="text" maxlength="1" class="otp-input" oninput="moveNext(this, 3)" onkeydown="moveBack(this, 3)">
-                <input type="text" maxlength="1" class="otp-input" oninput="moveNext(this, 4)" onkeydown="moveBack(this, 4)">
-                <input type="text" maxlength="1" class="otp-input" oninput="moveNext(this, 5)" onkeydown="moveBack(this, 5)">
-                <input type="text" maxlength="1" class="otp-input" oninput="moveNext(this, 6)" onkeydown="moveBack(this, 6)">
+                <input type="text" maxlength="1" class="otp-input" oninput="moveNext(this, 1)" onkeydown="moveBack(this, 1, event)" onpaste="handlePaste(event)">
+                <input type="text" maxlength="1" class="otp-input" oninput="moveNext(this, 2)" onkeydown="moveBack(this, 2, event)" onpaste="handlePaste(event)">
+                <input type="text" maxlength="1" class="otp-input" oninput="moveNext(this, 3)" onkeydown="moveBack(this, 3, event)" onpaste="handlePaste(event)">
+                <input type="text" maxlength="1" class="otp-input" oninput="moveNext(this, 4)" onkeydown="moveBack(this, 4, event)" onpaste="handlePaste(event)">
+                <input type="text" maxlength="1" class="otp-input" oninput="moveNext(this, 5)" onkeydown="moveBack(this, 5, event)" onpaste="handlePaste(event)">
+                <input type="text" maxlength="1" class="otp-input" oninput="moveNext(this, 6)" onkeydown="moveBack(this, 6, event)" onpaste="handlePaste(event)">
             </div>
 
             <div asp-validation-summary="All" class="text-danger small mb-3"></div>
@@ -152,15 +152,31 @@
     <script>
         function moveNext(el, nextId) {
             if (el.value.length === 1 && nextId < 6) {
-                el.nextElementSibling.focus();
+                const next = el.parentElement.children[nextId];
+                if (next) next.focus();
             }
             updateFullOTP();
         }
 
-        function moveBack(el, prevId) {
-            if (event.key === "Backspace" && el.value.length === 0 && prevId > 1) {
-                el.previousElementSibling.focus();
+        function moveBack(el, prevId, e) {
+            if (e.key === "Backspace" && el.value.length === 0 && prevId > 1) {
+                const prev = el.parentElement.children[prevId - 2];
+                if (prev) prev.focus();
             }
+        }
+
+        function handlePaste(e) {
+            e.preventDefault();
+            const data = e.clipboardData.getData('text').slice(0, 6);
+            if (!/^\d+$/.test(data)) return;
+
+            const inputs = document.querySelectorAll('.otp-input');
+            data.split('').forEach((char, i) => {
+                if (inputs[i]) inputs[i].value = char;
+            });
+            
+            if (inputs[data.length - 1]) inputs[data.length - 1].focus();
+            updateFullOTP();
         }
 
         function updateFullOTP() {
