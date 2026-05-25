@@ -1,5 +1,4 @@
 
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TechStore.Services.Interfaces;
@@ -18,13 +17,15 @@ namespace TechStore.Areas.Admin.Controllers
             _dashboardService = dashboardService;
         }
 
-        public IActionResult Index()
+        // FIX 10: Controller is now async — awaits the single batched + cached DB call
+        public async Task<IActionResult> Index()
         {
+            var stats = await _dashboardService.GetStatsAsync();
 
-            ViewBag.Orders = _dashboardService.GetTotalOrdersCount();
-            ViewBag.ApprovedOrders = _dashboardService.GetApprovedOrdersCount();
-            ViewBag.Users = _dashboardService.GetTotalUsersCount();
-            ViewBag.Products = _dashboardService.GetTotalProductsCount();
+            ViewBag.Orders = stats.TotalOrders;
+            ViewBag.ApprovedOrders = stats.ApprovedOrders;
+            ViewBag.Users = stats.TotalUsers;
+            ViewBag.Products = stats.TotalProducts;
 
             return View();
         }

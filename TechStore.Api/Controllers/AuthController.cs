@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
@@ -62,20 +63,24 @@ namespace TechStore.Api.Controllers
             return new UserDto
             {
                 Id = user.Id,
-                Email = user.Email,
-                Name = user.Name,
+                Email = user.Email ?? string.Empty,
+                Name = user.Name ?? string.Empty,
                 Token = _tokenService.CreateToken(user, new List<string> { SD.CustomerRole })
             };
         }
 
+        // FIX 8: Rate limited to 5 requests/min per IP to prevent OTP brute-force
+        // FIX 4: lockoutOnFailure must be enabled — configured in Identity options in Program.cs
         [HttpPost("login")]
+        [EnableRateLimiting("AuthPolicy")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
 
             if (user == null) return Unauthorized("Invalid email");
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+            // FIX 4: lockoutOnFailure: true — failed attempts now count toward lockout
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, lockoutOnFailure: true);
 
             if (!result.Succeeded) return Unauthorized("Invalid password");
 
@@ -89,13 +94,15 @@ namespace TechStore.Api.Controllers
             return new UserDto
             {
                 Id = user.Id,
-                Email = user.Email,
-                Name = user.Name,
+                Email = user.Email ?? string.Empty,
+                Name = user.Name ?? string.Empty,
                 Token = _tokenService.CreateToken(user, roles)
             };
         }
 
+        // FIX 8: Rate limited to 5 requests/min per IP to prevent OTP enumeration
         [HttpPost("verify-otp")]
+        [EnableRateLimiting("AuthPolicy")]
         public async Task<ActionResult> VerifyOTP(VerifyOTPDto verifyDto)
         {
             var user = await _userManager.FindByEmailAsync(verifyDto.Email);

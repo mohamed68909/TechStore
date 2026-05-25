@@ -19,15 +19,16 @@ namespace TechStore.Services.Implementation
             return _unitOfWork.Category.GetAll();
         }
 
-        public Category GetCategoryById(int id)
+        // FIX 11: GetFirstorDefault → GetFirstOrDefault; FIX H-3: returns nullable Category?
+        public Category? GetCategoryById(int id)
         {
-            return _unitOfWork.Category.GetFirstorDefault(x => x.Id == id);
+            return _unitOfWork.Category.GetFirstOrDefault(x => x.Id == id);
         }
 
         public void CreateCategory(Category category)
         {
             _unitOfWork.Category.Add(category);
-            _unitOfWork.Complete(); // ????? ??? ???? ??????
+            _unitOfWork.Complete();
         }
 
         public void UpdateCategory(Category category)
@@ -38,7 +39,8 @@ namespace TechStore.Services.Implementation
 
         public bool DeleteCategory(int id)
         {
-            var categoryInDb = _unitOfWork.Category.GetFirstorDefault(x => x.Id == id);
+            // FIX 11: GetFirstorDefault → GetFirstOrDefault
+            var categoryInDb = _unitOfWork.Category.GetFirstOrDefault(x => x.Id == id);
             if (categoryInDb != null)
             {
                 _unitOfWork.Category.Remove(categoryInDb);

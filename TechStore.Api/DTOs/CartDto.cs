@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TechStore.Api.DTOs
 {
@@ -20,11 +21,29 @@ namespace TechStore.Api.DTOs
 
     public class CheckoutDto
     {
+        [Required]
+        [MaxLength(100)]
         public string Name { get; set; } = string.Empty;
+
+        [Required]
+        [MaxLength(200)]
         public string Address { get; set; } = string.Empty;
+
+        [Required]
+        [MaxLength(100)]
         public string City { get; set; } = string.Empty;
+
+        [Required]
+        [Phone]
+        [MaxLength(20)]
         public string PhoneNumber { get; set; } = string.Empty;
+
+        [Required]
+        [Url]
         public string SuccessUrl { get; set; } = string.Empty;
+
+        [Required]
+        [Url]
         public string CancelUrl { get; set; } = string.Empty;
     }
 

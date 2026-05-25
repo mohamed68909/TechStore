@@ -26,7 +26,8 @@ namespace TechStore.ViewComponents
                 }
                 else
                 {
-                    HttpContext.Session.SetInt32(SD.SessionKey, _unitofwork.ShoppingCart.GetAll(x => x.ApplicationUserId == claim.Value).ToList().Count());
+                    var count = await _unitofwork.ShoppingCart.CountAsync(x => x.ApplicationUserId == claim.Value);
+                    HttpContext.Session.SetInt32(SD.SessionKey, count);
                     return View(HttpContext.Session.GetInt32(SD.SessionKey));
                 }
             }

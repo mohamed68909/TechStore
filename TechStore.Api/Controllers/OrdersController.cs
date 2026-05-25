@@ -1,32 +1,31 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using TechStore.Api.DTOs;
-using TechStore.Entities.Repositories;
 using TechStore.Services.Interfaces;
 
 namespace TechStore.Api.Controllers
 {
+    // FIX 6: Removed IUnitOfWork injection. All data access now flows through IOrderService only.
+    // Previously the controller queried _unitOfWork.OrderHeader.GetAll() directly, bypassing the service layer.
     [Authorize]
     public class OrdersController : BaseApiController
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IOrderService _orderService;
 
-        public OrdersController(IUnitOfWork unitOfWork, IOrderService orderService)
+        public OrdersController(IOrderService orderService)
         {
-            _unitOfWork = unitOfWork;
             _orderService = orderService;
         }
+
+        private string GetUserId() =>
+            User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
 
         [HttpGet]
         public ActionResult<IEnumerable<OrderHeaderDto>> GetOrders()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var orders = _unitOfWork.OrderHeader.GetAll(u => u.ApplicationUserId == userId)
-                .OrderByDescending(u => u.OrderDate);
+            // FIX 6: Uses service method (which sorts at DB level) — no direct repo access
+            var orders = _orderService.GetUserOrdersSorted(GetUserId());
 
             return Ok(orders.Select(o => new OrderHeaderDto
             {
@@ -43,15 +42,17 @@ namespace TechStore.Api.Controllers
         [HttpGet("{id}")]
         public ActionResult<OrderFullDto> GetOrderDetails(int id)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetUserId();
             var orderVM = _orderService.GetOrderDetails(id);
 
-            if (orderVM.OrderHeader.ApplicationUserId != userId)
-            {
-                return Unauthorized("You are not authorized to view this order.");
-            }
+            if (orderVM == null || orderVM.OrderHeader == null)
+                return NotFound("Order not found.");
 
-            var response = new OrderFullDto
+            // Ownership check: customers can only view their own orders
+            if (orderVM.OrderHeader.ApplicationUserId != userId)
+                return Unauthorized("You are not authorized to view this order.");
+
+            return Ok(new OrderFullDto
             {
                 Header = new OrderHeaderDto
                 {
@@ -69,9 +70,7 @@ namespace TechStore.Api.Controllers
                     Price = d.Price,
                     Count = d.Count
                 }).ToList()
-            };
-
-            return Ok(response);
+            });
         }
     }
 }

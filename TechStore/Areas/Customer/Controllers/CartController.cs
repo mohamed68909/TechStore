@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TechStore.Entities.ViewModels;
+using TechStore.Entities.Repositories;
 using TechStore.Services.Interfaces;
 using TechStore.Utilities;
 
@@ -11,10 +12,12 @@ using TechStore.Utilities;
 public class CartController : Controller
 {
     private readonly ICartService _cartService;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CartController(ICartService cartService)
+    public CartController(ICartService cartService, IUnitOfWork unitOfWork)
     {
         _cartService = cartService;
+        _unitOfWork = unitOfWork;
     }
 
     private string GetUserId() => ((ClaimsIdentity)User.Identity!)?.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
@@ -45,9 +48,15 @@ public class CartController : Controller
 
     public IActionResult OrderConfirmation(int id)
     {
+        var orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(u => u.Id == id); // FIX 11
+        if (orderHeader == null || orderHeader.ApplicationUserId != GetUserId())
+        {
+            return NotFound();
+        }
+
         try
         {
-            _cartService.ConfirmOrderPayment(id);
+            _cartService.ConfirmOrderPayment(id, GetUserId());
         }
         catch (Exception ex)
         {
@@ -58,22 +67,28 @@ public class CartController : Controller
         return View(id);
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult Plus(int cartid)
     {
-        _cartService.IncrementItem(cartid);
+        _cartService.IncrementItem(cartid, GetUserId());
         return RedirectToAction("Index");
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult Minus(int cartid)
     {
-        var count = _cartService.DecrementItem(cartid);
+        var count = _cartService.DecrementItem(cartid, GetUserId());
         if (count == 0) UpdateSessionCount();
         return RedirectToAction("Index");
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult Remove(int cartid)
     {
-        var remainingCount = _cartService.RemoveItem(cartid);
+        var remainingCount = _cartService.RemoveItem(cartid, GetUserId());
         HttpContext.Session.SetInt32(SD.SessionKey, remainingCount);
         return RedirectToAction("Index");
     }

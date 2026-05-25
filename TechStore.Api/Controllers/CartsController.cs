@@ -1,33 +1,32 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System.Security.Claims;
 using TechStore.Api.DTOs;
-using TechStore.Entities.Models;
-using TechStore.Entities.Repositories;
 using TechStore.Services.Interfaces;
 
 namespace TechStore.Api.Controllers
 {
+    // FIX 6: Removed IUnitOfWork injection. All data access now goes through ICartService only.
+    // Controllers must communicate exclusively through the service layer (Controller→Service→Repository).
     [Authorize]
     public class CartsController : BaseApiController
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly ICartService _cartService;
 
-        public CartsController(IUnitOfWork unitOfWork, ICartService cartService)
+        public CartsController(ICartService cartService)
         {
-            _unitOfWork = unitOfWork;
             _cartService = cartService;
         }
+
+        private string GetUserId() =>
+            User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
 
         [HttpGet]
         public ActionResult<CartDto> GetCart()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var cartVM = _cartService.GetCartViewModel(userId!);
+            var cartVM = _cartService.GetCartViewModel(GetUserId());
 
-            var response = new CartDto
+            return new CartDto
             {
                 TotalPrice = cartVM.OrderHeader.TotalPrice,
                 Items = cartVM.CartsList.Select(c => new CartItemDto
@@ -40,83 +39,82 @@ namespace TechStore.Api.Controllers
                     Count = c.Count
                 }).ToList()
             };
-
-            return response;
         }
 
+        // FIX 6: Product existence is now validated inside CartService.AddToCart()
+        // which also validates count > 0, preventing FK violations and invalid data.
         [HttpPost("add")]
         public ActionResult AddToCart(int productId, int count = 1)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            
-            var cartFromDb = _unitOfWork.ShoppingCart.GetFirstorDefault(
-                u => u.ApplicationUserId == userId && u.ProductId == productId);
+            var success = _cartService.AddToCart(GetUserId(), productId, count);
+            if (!success)
+                return BadRequest("Invalid product or count.");
 
-            if (cartFromDb == null)
-            {
-                var cart = new ShoppingCart
-                {
-                    ProductId = productId,
-                    Count = count,
-                    ApplicationUserId = userId!
-                };
-                _unitOfWork.ShoppingCart.Add(cart);
-            }
-            else
-            {
-                _unitOfWork.ShoppingCart.IncreaseCount(cartFromDb, count);
-            }
-
-            _unitOfWork.Complete();
-            return Ok("Product added to cart");
+            return Ok("Product added to cart.");
         }
 
+        // FIX 6: Ownership check is encapsulated in the service — controller no longer
+        // needs a direct DB round-trip to verify before calling the service method.
         [HttpPatch("increment/{cartId}")]
         public ActionResult<int> Increment(int cartId)
         {
-            return _cartService.IncrementItem(cartId);
+            var result = _cartService.IncrementItem(cartId, GetUserId());
+            if (result == 0) return NotFound("Cart item not found or does not belong to you.");
+            return result;
         }
 
         [HttpPatch("decrement/{cartId}")]
         public ActionResult<int> Decrement(int cartId)
         {
-            return _cartService.DecrementItem(cartId);
+            var result = _cartService.DecrementItem(cartId, GetUserId());
+            // 0 is a valid result (item removed when count reaches 0) — return it normally
+            return result;
         }
 
         [HttpDelete("{cartId}")]
         public ActionResult Remove(int cartId)
         {
-            _cartService.RemoveItem(cartId);
+            var result = _cartService.RemoveItem(cartId, GetUserId());
+            // result == 0 when not found/unauthorized — distinguish from success with empty cart
+            if (result < 0) return NotFound("Cart item not found or does not belong to you.");
             return NoContent();
         }
 
+        // FIX 3 + FIX 9: Checkout now uses the async Stripe session method
+        // which wraps the full checkout flow in a DB transaction (atomic).
         [HttpPost("checkout")]
-        public ActionResult<PaymentResponseDto> Checkout(CheckoutDto checkoutDto)
+        public async Task<ActionResult<PaymentResponseDto>> Checkout(CheckoutDto checkoutDto)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var cartVM = _cartService.GetCartViewModel(userId!);
+            var userId = GetUserId();
+            var cartVM = _cartService.GetCartViewModel(userId);
 
             if (!cartVM.CartsList.Any())
-            {
-                return BadRequest("Cart is empty");
-            }
+                return BadRequest("Cart is empty.");
 
-            // Fill header info from DTO
             cartVM.OrderHeader.Name = checkoutDto.Name;
             cartVM.OrderHeader.Address = checkoutDto.Address;
             cartVM.OrderHeader.City = checkoutDto.City;
             cartVM.OrderHeader.PhoneNumber = checkoutDto.PhoneNumber;
 
-            // Use provided URLs or defaults
-            var domain = Request.Scheme + "://" + Request.Host + "/";
-            var session = _cartService.CreateStripeSession(cartVM, userId!, domain);
+            var domain = $"{Request.Scheme}://{Request.Host}/";
 
-            return Ok(new PaymentResponseDto
+            try
             {
-                SessionId = session.Id,
-                PaymentUrl = session.Url,
-                OrderId = cartVM.OrderHeader.Id
-            });
+                // FIX 3: Uses the new async transactional method
+                var session = await _cartService.CreateStripeSessionAsync(
+                    cartVM, userId, domain, checkoutDto.SuccessUrl, checkoutDto.CancelUrl);
+
+                return Ok(new PaymentResponseDto
+                {
+                    SessionId = session.Id,
+                    PaymentUrl = session.Url,
+                    OrderId = cartVM.OrderHeader.Id
+                });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

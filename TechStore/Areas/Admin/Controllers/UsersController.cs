@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 using System.Security.Claims;
 using TechStore.Services.Interfaces;
 using TechStore.Utilities;
@@ -20,15 +19,18 @@ namespace TechStore.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            //  Claims
             var claimsIdentity = (ClaimsIdentity?)User.Identity;
-            var claim = claimsIdentity?.FindFirst(ClaimTypes.NameIdentifier);
-            string userId = claim?.Value ?? string.Empty;
-
+            var userId = claimsIdentity?.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
             var users = _userService.GetAllUsersExcept(userId);
             return View(users);
         }
 
+        // FIX 7: Changed from GET to POST with [ValidateAntiForgeryToken].
+        // The previous GET implementation was vulnerable to CSRF — any website could
+        // trigger a lock/unlock by embedding a simple <img src="/Admin/Users/LockUnlock?id=..."> tag.
+        // A POST with anti-forgery token requires a legitimate form submission from our own pages.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult LockUnlock(string? id)
         {
             if (string.IsNullOrEmpty(id)) return NotFound();
@@ -36,7 +38,7 @@ namespace TechStore.Areas.Admin.Controllers
             var success = _userService.LockUnlockUser(id);
             if (!success) return NotFound();
 
-            return RedirectToAction("Index", "Users", new { area = "Admin" });
+            return RedirectToAction(nameof(Index), "Users", new { area = "Admin" });
         }
     }
 }

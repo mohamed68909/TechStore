@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.37012.4
@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechStore", "TechStore\Tech
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechStore.Entities", "TechStore.Entities\TechStore.Entities.csproj", "{A7DC0264-5609-4BEC-9F20-F9FEFAC8148D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechStore.Utilatis", "TechStore.Utilatis\TechStore.Utilatis.csproj", "{35890379-AD5A-4EBB-9F1E-759D9AF9C736}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechStore.Utilities", "TechStore.Utilities\TechStore.Utilities.csproj", "{35890379-AD5A-4EBB-9F1E-759D9AF9C736}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechStore.Services", "TechStore.Services\TechStore.Services.csproj", "{7301E140-DDF4-4304-8337-13345012D97D}"
 EndProject

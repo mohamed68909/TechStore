@@ -361,3 +361,12 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Publish output folders
+publish_output*/
+
+# Zip archives
+*.zip
+
+# Project demo images (large binary files)
+ProjectImages/

@@ -1,5 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using TechStore.DataAccess.Data;
 using TechStore.Entities.Models;
 using TechStore.Utilities;
@@ -10,80 +14,86 @@ namespace TechStore.DataAccess.DbInitializer
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-
-
-
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IConfiguration _configuration;
 
         public DbInitializer(
             UserManager<ApplicationUser> userManager,
-
-
-            RoleManager<IdentityRole> roleManager
-            , ApplicationDbContext context
-            )
+            RoleManager<IdentityRole> roleManager,
+            ApplicationDbContext context,
+            IConfiguration configuration)
         {
             _userManager = userManager;
-
-
             _roleManager = roleManager;
             _context = context;
+            _configuration = configuration;
         }
 
-        public void Initialize()
+        public async Task InitializeAsync()
         {
             try
             {
-                _context.Database.EnsureCreated();
+                var pendingMigrations = await _context.Database.GetPendingMigrationsAsync();
+                if (pendingMigrations.Any())
+                {
+                    await _context.Database.MigrateAsync();
+                }
             }
             catch (Exception ex)
             {
-                // Log the exception or handle it as needed
                 Console.WriteLine($"An error occurred during database initialization: {ex.Message}");
                 return;
             }
 
-
-            if (!_roleManager.RoleExistsAsync(SD.AdminRole).GetAwaiter().GetResult())
+            if (!await _roleManager.RoleExistsAsync(SD.AdminRole))
             {
-                _roleManager.CreateAsync(new IdentityRole(SD.AdminRole)).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole(SD.EditorRole)).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole(SD.CustomerRole)).GetAwaiter().GetResult();
+                await _roleManager.CreateAsync(new IdentityRole(SD.AdminRole));
+                await _roleManager.CreateAsync(new IdentityRole(SD.EditorRole));
+                await _roleManager.CreateAsync(new IdentityRole(SD.CustomerRole));
             }
-            var existingAdmin = _userManager.FindByEmailAsync("Admin@gmail.com").GetAwaiter().GetResult();
+
+            var adminEmail = _configuration["AdminSettings:Email"] ?? "Admin@gmail.com";
+            var adminPassword = _configuration["AdminSettings:Password"] ?? "Admin123*";
+            var adminName = _configuration["AdminSettings:Name"] ?? "Admin";
+            var adminCity = _configuration["AdminSettings:City"] ?? "Cairo";
+            var adminAddress = _configuration["AdminSettings:Address"] ?? "Cairo";
+
+            var existingAdmin = await _userManager.FindByEmailAsync(adminEmail);
             if (existingAdmin == null)
             {
-                _userManager.CreateAsync(new ApplicationUser
+                var newAdmin = new ApplicationUser
                 {
-                    UserName = "Admin",
-                    Email = "Admin@gmail.com",
-                    Name = "Admin",
-                    City = "Cairo",
-                    Address = "Cairo",
+                    UserName = adminName,
+                    Email = adminEmail,
+                    Name = adminName,
+                    City = adminCity,
+                    Address = adminAddress,
                     EmailConfirmed = true
-                }, "Admin123*").GetAwaiter().GetResult();
+                };
 
-                var user = _userManager.FindByEmailAsync("Admin@gmail.com").GetAwaiter().GetResult();
-                if (user != null)
+                var result = await _userManager.CreateAsync(newAdmin, adminPassword);
+                if (result.Succeeded)
                 {
-                    _userManager.AddToRoleAsync(user, SD.AdminRole).GetAwaiter().GetResult();
+                    await _userManager.AddToRoleAsync(newAdmin, SD.AdminRole);
+                }
+                else
+                {
+                    var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                    Console.WriteLine($"Failed to create seed admin user: {errors}");
                 }
             }
             else
             {
-                // Ensure existing admin is confirmed
                 if (!existingAdmin.EmailConfirmed)
                 {
                     existingAdmin.EmailConfirmed = true;
-                    _userManager.UpdateAsync(existingAdmin).GetAwaiter().GetResult();
+                    await _userManager.UpdateAsync(existingAdmin);
                 }
-                // Ensure role is assigned
-                if (!_userManager.IsInRoleAsync(existingAdmin, SD.AdminRole).GetAwaiter().GetResult())
+                if (!await _userManager.IsInRoleAsync(existingAdmin, SD.AdminRole))
                 {
-                    _userManager.AddToRoleAsync(existingAdmin, SD.AdminRole).GetAwaiter().GetResult();
+                    await _userManager.AddToRoleAsync(existingAdmin, SD.AdminRole);
                 }
             }
-
         }
     }
 }

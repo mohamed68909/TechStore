@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using TechStore.Entities.ViewModels;
 using TechStore.Utilities;
 
-
 namespace TechStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
@@ -11,12 +10,10 @@ namespace TechStore.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
-        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(IProductService productService, IWebHostEnvironment webHostEnvironment)
+        public ProductController(IProductService productService)
         {
             _productService = productService;
-            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index() => View();
@@ -37,8 +34,9 @@ namespace TechStore.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-              
-                _productService.AddProduct(productVM, file, _webHostEnvironment.WebRootPath);
+                using var fileStream = file?.OpenReadStream();
+                string? fileName = file?.FileName;
+                _productService.AddProduct(productVM, fileStream, fileName);
                 TempData["Create"] = "Product has been added successfully";
                 return RedirectToAction("Index");
             }
@@ -59,7 +57,9 @@ namespace TechStore.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                _productService.UpdateProduct(productVM, file, _webHostEnvironment.WebRootPath);
+                using var fileStream = file?.OpenReadStream();
+                string? fileName = file?.FileName;
+                _productService.UpdateProduct(productVM, fileStream, fileName);
                 TempData["Update"] = "Product has been updated successfully";
                 return RedirectToAction("Index");
             }
@@ -67,10 +67,10 @@ namespace TechStore.Areas.Admin.Controllers
         }
 
         [HttpDelete]
+        [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
-            
-            var success = _productService.DeleteProduct(id, _webHostEnvironment.WebRootPath);
+            var success = _productService.DeleteProduct(id);
             return Json(new { success = success, message = success ? "Product has been deleted successfully" : "Error while deleting" });
         }
     }

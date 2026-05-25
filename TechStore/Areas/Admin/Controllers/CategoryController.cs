@@ -75,6 +75,7 @@ namespace TechStore.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteCategory(int id)
         {
             var success = _categoryService.DeleteCategory(id);
