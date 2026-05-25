@@ -22,7 +22,7 @@
     <ProjectReference Include="..\TechStore.Entities\TechStore.Entities.csproj" />
     <ProjectReference Include="..\TechStore.Services\TechStore.Services.csproj" />
     <ProjectReference Include="..\TechStore.DataAccess\TechStore.DataAccess.csproj" />
-    <ProjectReference Include="..\TechStore.Utilatis\TechStore.Utilatis.csproj" />
+    <ProjectReference Include="..\TechStore.Utilities\TechStore.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

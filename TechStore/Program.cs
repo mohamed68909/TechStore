@@ -17,6 +17,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.Configure<ImageUploadSettings>(options => {
+    options.WebRootPath = builder.Environment.WebRootPath;
+});
+
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")
@@ -25,9 +29,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.Configure<StripeData>(builder.Configuration.GetSection("stripe"));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
-    options => {
-        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(4);
-        options.SignIn.RequireConfirmedAccount = true; // Required for OTP/Email verification
+    options =>
+    {
+        // FIX 4: Configure secure lockout to prevent brute-force attacks.
+        // After 5 failed attempts the account is locked for 15 minutes.
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+        options.Lockout.MaxFailedAccessAttempts = 5;
+        options.Lockout.AllowedForNewUsers = true;
+
+        options.SignIn.RequireConfirmedAccount = true;
         options.User.RequireUniqueEmail = true;
     })
     .AddDefaultTokenProviders().AddDefaultUI()
@@ -62,6 +72,9 @@ builder.Services.AddScoped<IOTPService, OTPService>();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 
+// FIX 10: Register IMemoryCache for DashboardService caching
+builder.Services.AddMemoryCache();
+
 // Custom mappings removed as we are now using the standard 'Areas' folder.
 
 var app = builder.Build();
@@ -90,18 +103,15 @@ app.UseAuthorization();
 app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}");
-
-app.MapControllerRoute(
-    name: "Customer",
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
-SeeDB();
+
+// FIX 11: Renamed from SeeDB → SeedDb (correct .NET naming conventions)
+await SeedDb();
 app.Run();
-void SeeDB()
+
+async Task SeedDb()
 {
-    using (var scope = app.Services.CreateScope())
-    {
-        var db = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-        db.Initialize();
-    }
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+    await db.InitializeAsync();
 }

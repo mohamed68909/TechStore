@@ -60,7 +60,7 @@ namespace TechStore.Web.Areas.Identity.Pages.Account
                 await _userManager.UpdateAsync(user);
 
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToPage("/Index", new { area = "Customer" });
+                return RedirectToAction("Index", "Home", new { area = "Customer" });
             }
 
             ModelState.AddModelError(string.Empty, "The activation code is incorrect or has expired.");

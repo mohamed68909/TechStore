@@ -47,9 +47,10 @@ namespace TechStore.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult StartProccess()
+        // FIX 11: Renamed from StartProccess → StartProcess; SD.Proccessing → SD.Processing
+        public IActionResult StartProcess()
         {
-            _orderService.UpdateStatus(OrderVM.OrderHeader.Id, SD.Proccessing);
+            _orderService.UpdateStatus(OrderVM.OrderHeader.Id, SD.Processing);
             return RedirectToAction("Details", new { orderid = OrderVM.OrderHeader.Id });
         }
 
@@ -70,6 +71,7 @@ namespace TechStore.Areas.Admin.Controllers
         }
 
         [HttpDelete]
+        [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
             try

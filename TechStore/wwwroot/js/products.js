@@ -49,7 +49,10 @@ function DeleteItem(url) {
         if (result.isConfirmed) {
             $.ajax({
                 type: "DELETE",
-                url: url,                
+                url: url,
+                headers: {
+                    "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                },
                 success: function (data) {
                     if (data.success) {
                         toastr.success(data.message);

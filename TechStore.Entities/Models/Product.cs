@@ -9,11 +9,15 @@ namespace TechStore.Entities.Models
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(150)]
         public string Name { get; set; } = string.Empty;
+
+        [MaxLength(2000)]
         public string Description { get; set; } = string.Empty;
 
         [DisplayName("Image")]
         [ValidateNever]
+        [MaxLength(500)]
         public string Img { get; set; } = string.Empty;
 
         [Required]

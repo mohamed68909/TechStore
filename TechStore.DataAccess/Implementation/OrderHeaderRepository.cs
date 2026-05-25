@@ -3,11 +3,11 @@ using TechStore.Entities.Models;
 using TechStore.Entities.Repositories;
 
 namespace TechStore.DataAccess.Implementation
-
 {
     public class OrderHeaderRepository : GenericRepository<OrderHeader>, IOrderHeaderRepository
     {
         private readonly ApplicationDbContext _context;
+
         public OrderHeaderRepository(ApplicationDbContext context) : base(context)
         {
             _context = context;
@@ -18,17 +18,22 @@ namespace TechStore.DataAccess.Implementation
             _context.OrderHeaders.Update(orderHeader);
         }
 
-        public void UpdateStatus(int id, string? OrderStatus, string? PaymentStatus)
+        // FIX H-4: UpdateStatus previously always overwrote PaymentDate with UtcNow,
+        // even when the update was purely for order status (e.g., "Processing", "Shipped").
+        // Now PaymentDate is only updated when a paymentStatus is actually being changed.
+        public void UpdateStatus(int id, string? orderStatus, string? paymentStatus)
         {
-            var OrderFromDb = _context.OrderHeaders.SingleOrDefault(x => x.Id == id);
-            if (OrderFromDb != null)
+            var orderFromDb = _context.OrderHeaders.SingleOrDefault(x => x.Id == id);
+            if (orderFromDb == null) return;
+
+            if (orderStatus != null)
+                orderFromDb.OrderStatus = orderStatus;
+
+            // Only stamp PaymentDate when payment status is explicitly being updated
+            if (paymentStatus != null)
             {
-                OrderFromDb.OrderStatus = OrderStatus;
-                OrderFromDb.PaymentDate = DateTimeOffset.UtcNow;
-                if (PaymentStatus != null)
-                {
-                    OrderFromDb.PaymentStatus = PaymentStatus;
-                }
+                orderFromDb.PaymentStatus = paymentStatus;
+                orderFromDb.PaymentDate = DateTimeOffset.UtcNow;
             }
         }
     }

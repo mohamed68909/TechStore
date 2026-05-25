@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Storage;
 using TechStore.DataAccess.Data;
 using TechStore.Entities.Repositories;
 
@@ -13,6 +14,7 @@ namespace TechStore.DataAccess.Implementation
         public IOrderHeaderRepository OrderHeader { get; private set; }
         public IOrderDetailRepository OrderDetail { get; private set; }
         public IApplicationUserRepository ApplicationUser { get; private set; }
+
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
@@ -24,10 +26,22 @@ namespace TechStore.DataAccess.Implementation
             ApplicationUser = new ApplicationUserRepository(context);
         }
 
-
         public int Complete()
         {
             return _context.SaveChanges();
+        }
+
+        public async Task<int> CompleteAsync()
+        {
+            return await _context.SaveChangesAsync();
+        }
+
+        // FIX 3: Delegate to EF Core's built-in transaction support.
+        // Callers use this in a using block with await transaction.CommitAsync()
+        // and rollback automatically on disposal if CommitAsync was not called.
+        public async Task<IDbContextTransaction> BeginTransactionAsync()
+        {
+            return await _context.Database.BeginTransactionAsync();
         }
 
         public void Dispose()
@@ -36,3 +50,4 @@ namespace TechStore.DataAccess.Implementation
         }
     }
 }
+

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TechStore.Entities.Models
@@ -15,6 +16,7 @@ namespace TechStore.Entities.Models
 
         public int Count { get; set; }
 
+        [MaxLength(450)]
         public string ApplicationUserId { get; set; } = string.Empty;
 
         [ForeignKey("ApplicationUserId")]

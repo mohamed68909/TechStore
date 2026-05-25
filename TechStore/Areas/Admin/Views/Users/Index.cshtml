@@ -64,15 +64,26 @@
                                 <td class="text-center">
                                     @if (item.LockoutEnd == null || item.LockoutEnd < DateTimeOffset.UtcNow)
                                     {
-                                        <a class="btn btn-outline-success btn-sm btn-action" asp-action="LockUnlock" asp-route-id="@item.Id" title="Lock Account">
-                                            <i class="fas fa-lock-open"></i>
-                                        </a>
+                                        @* FIX 7: Changed from <a> GET link to a POST form with anti-forgery token.
+                                           A GET link is CSRF-vulnerable — any external image/link could trigger it.
+                                           The form POST requires a valid anti-forgery token from our own page. *@
+                                        <form method="post" asp-action="LockUnlock" asp-area="Admin" asp-controller="Users" style="display:inline">
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-outline-warning btn-sm btn-action" title="Lock Account">
+                                                <i class="fas fa-lock-open"></i>
+                                            </button>
+                                        </form>
                                     }
                                     else
                                     {
-                                        <a class="btn btn-danger btn-sm btn-action shadow-sm" asp-action="LockUnlock" asp-route-id="@item.Id" title="Unlock Account">
-                                            <i class="fas fa-lock"></i>
-                                        </a>
+                                        <form method="post" asp-action="LockUnlock" asp-area="Admin" asp-controller="Users" style="display:inline">
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-danger btn-sm btn-action shadow-sm" title="Unlock Account">
+                                                <i class="fas fa-lock"></i>
+                                            </button>
+                                        </form>
                                     }
                                 </td>
                             </tr>

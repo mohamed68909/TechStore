@@ -1,7 +1,9 @@
-﻿namespace TechStore.DataAccess.DbInitializer
+using System.Threading.Tasks;
+
+namespace TechStore.DataAccess.DbInitializer
 {
     public interface IDbInitializer
     {
-        void Initialize();
+        Task InitializeAsync();
     }
 }

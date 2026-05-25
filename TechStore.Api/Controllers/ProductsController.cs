@@ -22,7 +22,7 @@ namespace TechStore.Api.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var product = _productService.GetAllProducts().FirstOrDefault(p => p.Id == id);
+            var product = _productService.GetProductById(id);
             if (product == null)
             {
                 return NotFound(new { success = false, message = "Product not found" });
@@ -33,7 +33,7 @@ namespace TechStore.Api.Controllers
         [HttpGet("category/{categoryId}")]
         public IActionResult GetByCategory(int categoryId)
         {
-            var products = _productService.GetAllProducts().Where(p => p.CategoryId == categoryId);
+            var products = _productService.GetProductsByCategoryId(categoryId);
             return Ok(new { success = true, data = products });
         }
     }
