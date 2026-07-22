@@ -1,117 +1,112 @@
-# 🚀 TechStore - Modern E-Commerce Platform
+# 🛒 TechStore - Modern E-Commerce Platform
 
-TechStore is a premium, high-performance e-commerce solution built with **ASP.NET Core 9.0**. It features a robust **Hybrid Architecture** (MVC + API), state-of-the-art security with **OTP & Social Auth**, and a globalized time system using **UTC standardization**.
+[![Framework](https://img.shields.io/badge/ASP.NET%20Core-9.0-512BD4?style=for-the-badge&logo=.net)](https://dotnet.microsoft.com/)
+[![Database](https://img.shields.io/badge/SQL%20Server-2022-CC292B?style=for-the-badge&logo=microsoftsqlserver)](https://www.microsoft.com/sql-server)
+[![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=for-the-badge&logo=bootstrap)](https://getbootstrap.com/)
+[![Payments](https://img.shields.io/badge/Stripe-Integration-008CDD?style=for-the-badge&logo=stripe)](https://stripe.com)
+[![License](https://img.shields.io/badge/License-MIT-green.style=for-the-badge)](LICENSE)
 
----
-
-## ✨ Key Features & Modules
-
-### 🛠️ Administrative Dashboard (Admin)
-- **Category Management**: Full CRUD operations for organizing products with descriptive metadata.
-- **Product Management**: Advanced catalog management including image uploads, pricing, and category mapping.
-- **Order Processing**: End-to-end workflow management (Pending -> Approved -> Processing -> Shipped -> Cancelled/Refunded).
-- **User Management**: Administrative control over user roles, account locking, and profile monitoring.
-- **Real-time Metrics**: KPI tracking for total sales, order volume, and customer growth.
-
-### 🛒 Customer Experience (Storefront)
-- **Intuitive Shopping**: Responsive product browsing with detailed views and category filtering.
-- **Persistent Cart**: Secure shopping cart functionality with live quantity adjustments.
-- **Seamless Checkout**: Streamlined multi-step checkout process with physical address validation.
-- **Order Tracking**: Personal order history with real-time status updates and shipping tracking numbers.
+**TechStore** is a feature-rich, high-performance e-commerce web application built with **ASP.NET Core 9.0 MVC**. Designed with enterprise-grade architecture, seamless payment processing, robust MFA security, and a sleek modern user interface.
 
 ---
 
-## 🏗️ Technical Architecture
+## 🌟 Key Features
 
-### Hybrid Architecture
-The project is split into a **Monolithic MVC** core for SEO-friendly server-side rendering and a **Decoupled Web API** for modern client consumption.
-- **TechStore (MVC)**: Handles the main web interface and admin dashboard.
-- **TechStore.Api**: Provides JSON endpoints for potential Mobile or SPA integrations.
+### 🛍️ Customer Storefront
+- **Responsive Catalog Browsing**: Dynamic product catalog with category filtering, instant search, and detailed product views.
+- **Persistent Shopping Cart**: Interactive shopping cart with real-time item quantity management.
+- **Secure Multi-step Checkout**: Address validation and seamless order summary before payment.
+- **Stripe Payment Gateway**: Integrated credit/debit card payment processing via Stripe Checkout.
+- **Order Tracking & History**: Real-time order status tracking (Pending → Approved → Processing → Shipped → Completed) with detailed invoice history.
 
-### API Endpoint Summary
-| Module | Endpoint | Method | Security | Description |
-|--------|----------|--------|----------|-------------|
-| Auth | `/api/auth/register` | POST | Anonymous | Register a new user |
-| Auth | `/api/auth/login` | POST | Anonymous | Authenticate & get JWT |
-| Auth | `/api/auth/verify-otp` | POST | Anonymous | Verify account via code |
-| Categories | `/api/categories` | GET | Anonymous | List all categories |
-| Products | `/api/products` | GET | Anonymous | List all products |
-| Carts | `/api/carts` | GET | **Bearer JWT** | View user's cart |
-| Carts | `/api/carts/add` | POST | **Bearer JWT** | Add product to cart |
-| Carts | `/api/carts/checkout` | POST | **Bearer JWT** | Initiate Stripe payment |
-| Orders | `/api/orders` | GET | **Bearer JWT** | View order history |
+### 🛡️ Administrative Dashboard
+- **Product & Category Management**: Full CRUD operations with multi-image support, stock tracking, and metadata tagging.
+- **Order Fulfillment Center**: Complete lifecycle control over customer orders with automated status updates.
+- **User & Role Management**: Administrative control over customer accounts, role assignments, and lockouts.
+- **Real-time Analytics**: KPI tracking for total revenue, order count, and active customer growth metrics.
 
----
-
-## 🔐 Security & Identity Implementation
-
-### JWT Stateless Authentication
-- The API uses **JSON Web Tokens (JWT)** for secure, stateless communication.
-- Tokens are signed with **HMAC SHA-512** and contain user identifier and role claims.
-- Mobile clients transmit the token in the `Authorization: Bearer <Token>` header.
-
-### OTP Verification (MFA)
-- Implemented a custom **OTP System** that sends a 6-digit verification code to the user's email upon registration.
-- Prevents account activation until the code is verified, ensuring 100% valid user emails.
-- **UTC Sync**: OTP expiration windows are calculated using `DateTimeOffset.UtcNow`.
-
-### Social Authentication
-- Fully integrated with **Google** and **Facebook** OAuth 2.0.
-- Automatic account provisioning for social users with verified email status.
-
----
-
-## 💳 Payment Gateway Integration
-
-- **Stripe Integration**: Uses the official Stripe.net library for secure, PCI-compliant payment processing.
-- **Hybrid Support**: 
-    - **MVC**: Direct redirect to Stripe Checkout.
-    - **Web API**: Returns a `PaymentUrl` and `SessionId`, allowing mobile apps to host the payment session in a WebView.
-- **Post-Payment Logic**: Automatic order status transition and payment intent tracking upon successful transaction.
+### 🔐 Security & Identity
+- **ASP.NET Core Identity**: Secure password hashing, cookie authentication, and authorization policies.
+- **OTP Verification (MFA)**: Custom 6-digit email OTP system enforcing email verification upon registration.
+- **Social Authentication**: One-click OAuth 2.0 login integration with **Google** and **Facebook**.
+- **UTC Time Standardization**: Globalized time management using `DateTimeOffset.UtcNow` across all operations.
 
 ---
 
 ## 🛠️ Technology Stack
 
-- **Backend**: ASP.NET Core 9.0, Entity Framework Core 9.0
-- **Database**: MS SQL Server (Relational storage with UTC DateTimeOffset)
-- **Security**: ASP.NET Core Identity, JWT, OTP Verification
-- **Frontend MVC**: Razor Pages, Bootstrap 5, jQuery, SweetAlert2, DataTables.net
-- **UI Libraries**: FontAwesome 6, Google Fonts (Outfit & Cairo), CSS3 Glassmorphism
+| Layer | Technology |
+| :--- | :--- |
+| **Framework** | ASP.NET Core 9.0 (MVC) |
+| **ORM / Data Access** | Entity Framework Core 9.0 |
+| **Database** | Microsoft SQL Server |
+| **Identity & Security** | ASP.NET Core Identity, Custom OTP Service, OAuth 2.0 |
+| **Payment Integration** | Stripe.net SDK |
+| **Frontend Technologies** | Razor Views, Bootstrap 5, JavaScript (ES6+), jQuery |
+| **UI Libraries** | SweetAlert2, DataTables.net, FontAwesome 6, Google Fonts |
 
 ---
 
-## 🚀 Installation & Setup
+## 🏗️ Project Architecture
 
-1. **Clone & Restore**:
+```
+TechStore/
+├── TechStore/               # Main MVC Web Application (Views, Controllers, ViewModels)
+├── TechStore.Services/      # Business Logic Layer (Order, Cart, Product, Email, Stripe)
+├── TechStore.DataAccess/    # Data Access Layer (EF Core DbContext, Repositories, Migrations)
+├── TechStore.Entities/      # Domain Entities & DTO Models
+└── TechStore.Utilities/     # Shared Utilities, Constants (SD), Helpers
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
+- [SQL Server](https://www.microsoft.com/sql-server) (LocalDB or Express)
+- [Stripe Account](https://stripe.com) (for test API keys)
+
+### Installation & Setup
+
+1. **Clone the Repository**
    ```bash
    git clone https://github.com/mohamed68909/TechStore.git
+   cd TechStore
+   ```
+
+2. **Restore Dependencies**
+   ```bash
    dotnet restore
    ```
 
-2. **Database Setup**:
-   Update `ConnectionStrings` in `appsettings.json`, then run:
+3. **Configure Settings**
+   Update `appsettings.json` in the `TechStore` project with your Database Connection String, Stripe Keys, and Email settings:
+   ```json
+   {
+     "ConnectionStrings": {
+       "DefaultConnection": "Server=YOUR_SERVER;Database=TechStoreDb;Trusted_Connection=True;TrustServerCertificate=True;"
+     },
+     "Stripe": {
+       "SecretKey": "sk_test_...",
+       "PublishableKey": "pk_test_..."
+     }
+   }
+   ```
+
+4. **Apply Database Migrations**
    ```bash
    dotnet ef database update --project TechStore.DataAccess --startup-project TechStore
    ```
 
-3. **External Services**:
-   Configure `Stripe`, `Jwt`, and `Authentication` keys in the `appsettings.json` of the respective project.
-
----
-
-## 📁 Project Structure
-
-- `TechStore`: Main Web UI & MVC Logic.
-- `TechStore.Api`: RESTful API Layer with JWT Authentication.
-- `TechStore.Services`: Core Business logic (Order, Cart, Product, Token services).
-- `TechStore.DataAccess`: Repository implementations and DB Configuration.
-- `TechStore.Entities`: Domain Entities and DTOs.
-- `TechStore.Utilatis`: Static constants, SD, and helper classes.
+5. **Run the Application**
+   ```bash
+   dotnet run --project TechStore
+   ```
 
 ---
 
 ## 📄 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is open-source and available under the [MIT License](LICENSE).
 
 Developed with ❤️ by **Mohamed Ashraf**
